@@ -1,0 +1,47 @@
+# terraform-aws-remote-state-s3-backend
+
+A terraform module to set up the [S3 backend](https://www.terraform.io/docs/backends/types/s3.html) for your account. It creates a S3 bucket to store state files and a DynamoDB table for state locking and consistency checking.
+Resources are defined following best practices as described in [the official document] and [ozbillwang/terraform-best-practices].
+
+## Features
+
+- Create a S3 bucket to store remote state files.
+- Enable bucket replication and object versioning to prevent accidental data loss.
+- Create a DynamoDB table for state locking.
+- Create an IAM policy to allow permissions which Terraform needs.
+
+## Usage
+
+The module outputs `terraform_iam_policy` which can be attached to IAM users, groups or roles running Terraform. This will allow the entity accessing remote state files and the locking table.
+
+```hcl
+provider "aws" {
+}
+
+provider "aws" {
+  alias  = "replica"
+}
+
+module "remote_state" {
+  source = "nozaq/remote-state-s3-backend/aws"
+
+  replica_bucket_region = "us-west-1"
+
+  providers = {
+    aws         = aws
+    aws.replica = aws.replica
+  }
+}
+
+resource "aws_iam_user" "terraform" {
+  name = "TerraformUser"
+}
+
+resource "aws_iam_user_policy_attachment" "remote_state_access" {
+  user       = aws_iam_user.terraform.name
+  policy_arn = module.remote_state.terraform_iam_policy.arn
+}
+```
+
+Then you can configure your terraform files to use the S3 backend as described in [the document](https://www.terraform.io/docs/backends/types/s3.html#example-configuration).
+
