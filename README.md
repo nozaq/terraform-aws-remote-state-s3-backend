@@ -20,10 +20,12 @@ The module outputs `terraform_iam_policy` which can be attached to IAM users, gr
 
 ```hcl
 provider "aws" {
+  region = "us-east-1"
 }
 
 provider "aws" {
   alias  = "replica"
+  region = "us-west-1"
 }
 
 module "remote_state" {
