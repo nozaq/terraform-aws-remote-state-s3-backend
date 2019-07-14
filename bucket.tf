@@ -100,6 +100,16 @@ resource "aws_s3_bucket" "replica" {
   }
 }
 
+
+resource "aws_s3_bucket_public_access_block" "replica" {
+  bucket = aws_s3_bucket.replica.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
 resource "aws_s3_bucket" "state" {
   bucket_prefix = var.state_bucket_prefix
   acl           = "private"
@@ -135,4 +145,13 @@ resource "aws_s3_bucket" "state" {
   tags = {
     Terraform = "true"
   }
+}
+
+resource "aws_s3_bucket_public_access_block" "state" {
+  bucket = aws_s3_bucket.state.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
