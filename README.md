@@ -29,8 +29,6 @@ provider "aws" {
 module "remote_state" {
   source = "nozaq/remote-state-s3-backend/aws"
 
-  replica_bucket_region = "us-west-1"
-
   providers = {
     aws         = aws
     aws.replica = aws.replica

@@ -12,8 +12,6 @@ provider "aws" {
 module "remote_state" {
   source = "../../"
 
-  replica_bucket_region = var.replica_region
-
   providers = {
     aws         = aws
     aws.replica = aws.replica

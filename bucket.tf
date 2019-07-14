@@ -82,10 +82,14 @@ resource "aws_iam_policy_attachment" "replication" {
 #---------------------------------------------------------------------------------------------------
 # Buckets
 #---------------------------------------------------------------------------------------------------
+data "aws_region" "replica" {
+  provider = aws.replica
+}
+
 resource "aws_s3_bucket" "replica" {
   provider      = aws.replica
   bucket_prefix = var.replica_bucket_prefix
-  region        = var.replica_bucket_region
+  region        = data.aws_region.replica.name
 
   versioning {
     enabled = true

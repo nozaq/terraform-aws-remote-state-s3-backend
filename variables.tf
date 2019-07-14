@@ -37,10 +37,6 @@ variable "replica_bucket_prefix" {
   default     = "tf-remote-state-replica"
 }
 
-variable "replica_bucket_region" {
-  description = "the AWS region the replica bucket should reside in."
-}
-
 variable "iam_role_name_prefix" {
   description = "Creates a unique name beginning with the specified prefix."
   default     = "remote-state-replication-role"
