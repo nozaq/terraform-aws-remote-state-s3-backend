@@ -102,7 +102,8 @@ resource "aws_s3_bucket" "replica" {
 
 
 resource "aws_s3_bucket_public_access_block" "replica" {
-  bucket = aws_s3_bucket.replica.id
+  provider = aws.replica
+  bucket   = aws_s3_bucket.replica.id
 
   block_public_acls       = true
   block_public_policy     = true
