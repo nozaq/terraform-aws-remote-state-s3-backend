@@ -48,5 +48,18 @@ resource "aws_iam_user_policy_attachment" "remote_state_access" {
 ```
 
 Note that you need to provide two providers, one for the main state bucket and the other for the bucket to which the main state bucket is replicated to. Two providers must point to different AWS regions.
-Once resources are created, you can configure your terraform files to use the S3 backend as described in [the document](https://www.terraform.io/docs/backends/types/s3.html#example-configuration).
 
+Once resources are created, you can configure your terraform files to use the S3 backend as follows.
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket  = "THE_NAME_OF_THE_STATE_BUCKET"
+    key     = "some_environment/terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
+  }
+}
+```
+
+See [the official document](https://www.terraform.io/docs/backends/types/s3.html#example-configuration) for more detail.
