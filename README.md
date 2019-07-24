@@ -62,6 +62,8 @@ terraform {
 }
 ```
 
+See [the official document](https://www.terraform.io/docs/backends/types/s3.html#example-configuration) for more detail.
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
@@ -90,5 +92,3 @@ terraform {
 | terraform\_iam\_policy | The IAM Policy to access remote state environment. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
-See [the official document](https://www.terraform.io/docs/backends/types/s3.html#example-configuration) for more detail.
