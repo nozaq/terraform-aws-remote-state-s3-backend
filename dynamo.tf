@@ -18,7 +18,5 @@ resource "aws_dynamodb_table" "lock" {
     type = "S"
   }
 
-  tags = {
-    Terraform = true
-  }
+  tags = var.tags
 }
