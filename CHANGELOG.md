@@ -2,6 +2,17 @@
 ## [Unreleased]
 
 
+<a name="0.2.0"></a>
+## [0.2.0] - 2019-08-11
+### Feat
+- add noncurrent_version_expiration option
+- add s3_bucket_force_destroy flag
+- move non-current versions to Glacier
+
+### Fix
+- insufficient persmission to encrypt states with the KMS key
+
+
 <a name="0.1.0"></a>
 ## [0.1.0] - 2019-08-10
 ### Feat
@@ -29,7 +40,8 @@
 <a name="0.0.1"></a>
 ## 0.0.1 - 2019-07-14
 
-[Unreleased]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.0.4...0.1.0
 [0.0.4]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.0.2...0.0.3
