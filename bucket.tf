@@ -90,6 +90,7 @@ resource "aws_s3_bucket" "replica" {
   provider      = aws.replica
   bucket_prefix = var.replica_bucket_prefix
   region        = data.aws_region.replica.name
+  force_destroy = var.s3_bucket_force_destroy
 
   versioning {
     enabled = true
@@ -128,6 +129,7 @@ resource "aws_s3_bucket_public_access_block" "replica" {
 resource "aws_s3_bucket" "state" {
   bucket_prefix = var.state_bucket_prefix
   acl           = "private"
+  force_destroy = var.s3_bucket_force_destroy
 
   versioning {
     enabled = true

@@ -78,6 +78,11 @@ variable "noncurrent_version_transitions" {
   ]
 }
 
+variable "s3_bucket_force_destroy" {
+  description = "A boolean that indicates all objects should be deleted from S3 buckets so that the buckets can be destroyed without error. These objects are not recoverable."
+  default     = false
+}
+
 #---------------------------------------------------------------------------------------------------
 # DynamoDB Table for State Locking
 #---------------------------------------------------------------------------------------------------
