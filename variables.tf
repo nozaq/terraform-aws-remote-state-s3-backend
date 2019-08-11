@@ -78,6 +78,16 @@ variable "noncurrent_version_transitions" {
   ]
 }
 
+variable "noncurrent_version_expiration" {
+  description = "Specifies when noncurrent object versions expire. See the aws_s3_bucket document for detail."
+
+  type = object({
+    days = number
+  })
+
+  default = null
+}
+
 variable "s3_bucket_force_destroy" {
   description = "A boolean that indicates all objects should be deleted from S3 buckets so that the buckets can be destroyed without error. These objects are not recoverable."
   default     = false
