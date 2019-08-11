@@ -12,6 +12,8 @@ Resources are defined following best practices as described in [the official doc
 - Create a S3 bucket to store remote state files.
 - Encrypt state files with KMS.
 - Enable bucket replication and object versioning to prevent accidental data loss.
+- Automatically transit non-current versions in S3 buckets to AWS S3 Glacier to optimize the storage cost.
+- Optionally you can set to expire aged non-current versions(disabled by default).
 - Create a DynamoDB table for state locking.
 - Create an IAM policy to allow permissions which Terraform needs.
 
@@ -59,9 +61,12 @@ terraform {
     key     = "some_environment/terraform.tfstate"
     region  = "us-east-1"
     encrypt = true
+    kms_key_id = "THE_ID_OF_THE_KMS_KEY"
   }
 }
 ```
+
+`THE_NAME_OF_THE_STATE_BUCKET` and `THE_ID_OF_THE_KMS_KEY` can be replaced by `state_bucket.bucket`  and `kms_key.id`  in outputs from this module respectively.
 
 See [the official document](https://www.terraform.io/docs/backends/types/s3.html#example-configuration) for more detail.
 

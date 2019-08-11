@@ -41,7 +41,8 @@ resource "aws_iam_policy" "terraform" {
       "Action": [
         "kms:Encrypt",
         "kms:Decrypt",
-        "kms:DescribeKey"
+        "kms:DescribeKey",
+        "kms:GenerateDataKey"
       ],
       "Resource": "${aws_kms_key.this.arn}"
     }
