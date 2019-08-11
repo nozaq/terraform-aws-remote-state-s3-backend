@@ -80,6 +80,7 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 | kms\_key\_enable\_key\_rotation | Specifies whether key rotation is enabled. | string | `"true"` | no |
 | noncurrent\_version\_transitions | Specifies when noncurrent object versions transitions. See the aws\_s3\_bucket document for detail. | object | `[ { "days": 7, "storage_class": "GLACIER" } ]` | no |
 | replica\_bucket\_prefix | Creates a unique replica bucket name beginning with the specified prefix. | string | `"tf-remote-state-replica"` | no |
+| s3\_bucket\_force\_destroy | A boolean that indicates all objects should be deleted from S3 buckets so that the buckets can be destroyed without error. These objects are not recoverable. | string | `"false"` | no |
 | state\_bucket\_prefix | Creates a unique state bucket name beginning with the specified prefix. | string | `"tf-remote-state"` | no |
 | tags | A mapping of tags to assign to resources. | map | `{ "Terraform": "true" }` | no |
 | terraform\_iam\_policy\_name\_prefix | Creates a unique name beginning with the specified prefix. | string | `"terraform"` | no |
