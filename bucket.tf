@@ -1,3 +1,7 @@
+locals {
+  define_lifecycle_rule = var.noncurrent_version_expiration != null || length(var.noncurrent_version_transitions) > 0
+}
+
 #---------------------------------------------------------------------------------------------------
 # KMS Key to Encrypt S3 Bucket
 #---------------------------------------------------------------------------------------------------
@@ -97,7 +101,7 @@ resource "aws_s3_bucket" "replica" {
   }
 
   dynamic "lifecycle_rule" {
-    for_each = length(var.noncurrent_version_transitions) > 0 ? [var.noncurrent_version_transitions] : []
+    for_each = local.define_lifecycle_rule ? [true] : []
 
     content {
       enabled = true
@@ -107,6 +111,13 @@ resource "aws_s3_bucket" "replica" {
         content {
           days          = noncurrent_version_transition.value.days
           storage_class = noncurrent_version_transition.value.storage_class
+        }
+      }
+      dynamic "noncurrent_version_expiration" {
+        for_each = var.noncurrent_version_expiration != null ? [var.noncurrent_version_expiration] : []
+
+        content {
+          days = noncurrent_version_expiration.value.days
         }
       }
     }
@@ -160,7 +171,7 @@ resource "aws_s3_bucket" "state" {
   }
 
   dynamic "lifecycle_rule" {
-    for_each = length(var.noncurrent_version_transitions) > 0 ? [var.noncurrent_version_transitions] : []
+    for_each = local.define_lifecycle_rule ? [true] : []
 
     content {
       enabled = true
@@ -170,6 +181,13 @@ resource "aws_s3_bucket" "state" {
         content {
           days          = noncurrent_version_transition.value.days
           storage_class = noncurrent_version_transition.value.storage_class
+        }
+      }
+      dynamic "noncurrent_version_expiration" {
+        for_each = var.noncurrent_version_expiration != null ? [var.noncurrent_version_expiration] : []
+
+        content {
+          days = noncurrent_version_expiration.value.days
         }
       }
     }
