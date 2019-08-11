@@ -78,6 +78,7 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 | kms\_key\_deletion\_window\_in\_days | Duration in days after which the key is deleted after destruction of the resource, must be between 7 and 30 days. | string | `"30"` | no |
 | kms\_key\_description | The description of the key as viewed in AWS console. | string | `"The key used to encrypt the remote state bucket."` | no |
 | kms\_key\_enable\_key\_rotation | Specifies whether key rotation is enabled. | string | `"true"` | no |
+| noncurrent\_version\_transitions | Specifies when noncurrent object versions transitions. See the aws\_s3\_bucket document for detail. | object | `[ { "days": 7, "storage_class": "GLACIER" } ]` | no |
 | replica\_bucket\_prefix | Creates a unique replica bucket name beginning with the specified prefix. | string | `"tf-remote-state-replica"` | no |
 | state\_bucket\_prefix | Creates a unique state bucket name beginning with the specified prefix. | string | `"tf-remote-state"` | no |
 | tags | A mapping of tags to assign to resources. | map | `{ "Terraform": "true" }` | no |

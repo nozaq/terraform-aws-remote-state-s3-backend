@@ -62,6 +62,22 @@ variable "iam_policy_attachment_name" {
   default     = "tf-iam-role-attachment-replication-configuration"
 }
 
+variable "noncurrent_version_transitions" {
+  description = "Specifies when noncurrent object versions transitions. See the aws_s3_bucket document for detail."
+
+  type = list(object({
+    days          = number
+    storage_class = string
+  }))
+
+  default = [
+    {
+      days          = 7
+      storage_class = "GLACIER"
+    }
+  ]
+}
+
 #---------------------------------------------------------------------------------------------------
 # DynamoDB Table for State Locking
 #---------------------------------------------------------------------------------------------------

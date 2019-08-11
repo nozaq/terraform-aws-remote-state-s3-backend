@@ -95,6 +95,22 @@ resource "aws_s3_bucket" "replica" {
     enabled = true
   }
 
+  dynamic "lifecycle_rule" {
+    for_each = length(var.noncurrent_version_transitions) > 0 ? [var.noncurrent_version_transitions] : []
+
+    content {
+      enabled = true
+      dynamic "noncurrent_version_transition" {
+        for_each = var.noncurrent_version_transitions
+
+        content {
+          days          = noncurrent_version_transition.value.days
+          storage_class = noncurrent_version_transition.value.storage_class
+        }
+      }
+    }
+  }
+
   tags = var.tags
 }
 
@@ -137,6 +153,22 @@ resource "aws_s3_bucket" "state" {
       destination {
         bucket        = aws_s3_bucket.replica.arn
         storage_class = "STANDARD"
+      }
+    }
+  }
+
+  dynamic "lifecycle_rule" {
+    for_each = length(var.noncurrent_version_transitions) > 0 ? [var.noncurrent_version_transitions] : []
+
+    content {
+      enabled = true
+      dynamic "noncurrent_version_transition" {
+        for_each = var.noncurrent_version_transitions
+
+        content {
+          days          = noncurrent_version_transition.value.days
+          storage_class = noncurrent_version_transition.value.storage_class
+        }
       }
     }
   }
