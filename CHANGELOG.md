@@ -5,6 +5,7 @@
 <a name="0.2.1"></a>
 ## [0.2.1] - 2019-08-18
 ### Fix
+- allow use of KMS keys by the replication role
 - encrypt state files in the replica bucket
 
 
