@@ -13,6 +13,16 @@ resource "aws_kms_key" "this" {
   tags = var.tags
 }
 
+resource "aws_kms_key" "replica" {
+  provider = aws.replica
+
+  description             = var.kms_key_description
+  deletion_window_in_days = var.kms_key_deletion_window_in_days
+  enable_key_rotation     = var.kms_key_enable_key_rotation
+
+  tags = var.tags
+}
+
 #---------------------------------------------------------------------------------------------------
 # IAM Role for Replication
 #---------------------------------------------------------------------------------------------------
@@ -91,7 +101,8 @@ data "aws_region" "replica" {
 }
 
 resource "aws_s3_bucket" "replica" {
-  provider      = aws.replica
+  provider = aws.replica
+
   bucket_prefix = var.replica_bucket_prefix
   region        = data.aws_region.replica.name
   force_destroy = var.s3_bucket_force_destroy
@@ -150,7 +161,7 @@ resource "aws_s3_bucket" "state" {
     rule {
       apply_server_side_encryption_by_default {
         sse_algorithm     = "aws:kms"
-        kms_master_key_id = "${aws_kms_key.this.arn}"
+        kms_master_key_id = aws_kms_key.this.arn
       }
     }
   }
@@ -163,9 +174,16 @@ resource "aws_s3_bucket" "state" {
       prefix = ""
       status = "Enabled"
 
+      source_selection_criteria {
+        sse_kms_encrypted_objects {
+          enabled = true
+        }
+      }
+
       destination {
-        bucket        = aws_s3_bucket.replica.arn
-        storage_class = "STANDARD"
+        bucket             = aws_s3_bucket.replica.arn
+        storage_class      = "STANDARD"
+        replica_kms_key_id = aws_kms_key.replica.arn
       }
     }
   }
