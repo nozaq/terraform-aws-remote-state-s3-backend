@@ -25,6 +25,7 @@ resource "aws_kms_key" "replica" {
 
 #---------------------------------------------------------------------------------------------------
 # IAM Role for Replication
+# https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-replication-config-for-kms-objects.html
 #---------------------------------------------------------------------------------------------------
 resource "aws_iam_role" "replication" {
   name_prefix = var.iam_role_name_prefix
@@ -66,7 +67,7 @@ resource "aws_iam_policy" "replication" {
     },
     {
       "Action": [
-        "s3:GetObjectVersion",
+        "s3:GetObjectVersionForReplication",
         "s3:GetObjectVersionAcl"
       ],
       "Effect": "Allow",
@@ -81,6 +82,37 @@ resource "aws_iam_policy" "replication" {
       ],
       "Effect": "Allow",
       "Resource": "${aws_s3_bucket.replica.arn}/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "kms:Decrypt"
+      ],
+      "Resource": "${aws_kms_key.this.arn}",
+      "Condition": {
+        "StringLike": {
+          "kms:ViaService": "s3.${data.aws_region.state.name}.amazonaws.com",
+          "kms:EncryptionContext:aws:s3:arn": [
+            "${aws_s3_bucket.state.arn}/*"
+          ]
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "kms:Encrypt",
+        "kms:GenerateDataKey"
+      ],
+      "Resource": "${aws_kms_key.replica.arn}",
+      "Condition": {
+        "StringLike": {
+          "kms:ViaService": "s3.${data.aws_region.replica.name}.amazonaws.com",
+          "kms:EncryptionContext:aws:s3:arn": [
+            "${aws_s3_bucket.replica.arn}/*"
+          ]
+        }
+      }
     }
   ]
 }
@@ -96,6 +128,9 @@ resource "aws_iam_policy_attachment" "replication" {
 #---------------------------------------------------------------------------------------------------
 # Buckets
 #---------------------------------------------------------------------------------------------------
+data "aws_region" "state" {
+}
+
 data "aws_region" "replica" {
   provider = aws.replica
 }
