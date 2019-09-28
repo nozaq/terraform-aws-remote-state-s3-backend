@@ -1,6 +1,6 @@
 # terraform-aws-remote-state-s3-backend
 
-[![CircleCI](https://circleci.com/gh/nozaq/terraform-aws-remote-state-s3-backend/tree/master.svg?style=svg)](https://circleci.com/gh/nozaq/terraform-aws-remote-state-s3-backend/tree/master)
+[![Github Actions](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/workflows/Terraform/badge.svg)](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/actions?workflow=Terraform)
 
 [Terraform Module Registry](https://registry.terraform.io/modules/nozaq/remote-state-s3-backend/aws)
 
