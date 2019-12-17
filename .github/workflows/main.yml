@@ -1,6 +1,7 @@
 name: Terraform
 on: [push, pull_request]
-
+env:
+  TF_ACTIONS_VERSION: latest
 jobs:
   check-format:
     name: Check format
@@ -12,7 +13,7 @@ jobs:
     - name: 'Terraform Format'
       uses: hashicorp/terraform-github-actions@master
       with:
-        tf_actions_version: 0.12.15
+        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
         tf_actions_subcommand: 'fmt'
         tf_actions_working_dir: '.'
         tf_actions_comment: true
@@ -29,7 +30,7 @@ jobs:
     - name: 'Terraform Init - examples/simple'
       uses: hashicorp/terraform-github-actions@master
       with:
-        tf_actions_version: 0.12.15
+        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
         tf_actions_subcommand: 'init'
         tf_actions_working_dir: './examples/simple'
         tf_actions_comment: true
@@ -39,7 +40,7 @@ jobs:
     - name: 'Terraform Validate - examples/simple'
       uses: hashicorp/terraform-github-actions@master
       with:
-        tf_actions_version: 0.12.15
+        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
         tf_actions_subcommand: 'validate'
         tf_actions_working_dir: './examples/simple'
         tf_actions_comment: true
