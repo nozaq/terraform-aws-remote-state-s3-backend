@@ -15,11 +15,11 @@ Resources are defined following best practices as described in [the official doc
 - Automatically transit non-current versions in S3 buckets to AWS S3 Glacier to optimize the storage cost.
 - Optionally you can set to expire aged non-current versions(disabled by default).
 - Create a DynamoDB table for state locking.
-- Create an IAM policy to allow permissions which Terraform needs.
+- Optionally create an IAM policy to allow permissions which Terraform needs.
 
 ## Usage
 
-The module outputs `terraform_iam_policy` which can be attached to IAM users, groups or roles running Terraform. This will allow the entity accessing remote state files and the locking table.
+The module outputs `terraform_iam_policy` which can be attached to IAM users, groups or roles running Terraform. This will allow the entity accessing remote state files and the locking table. This can optionally be disabled with `terraform_iam_policy_create = false`
 
 ```hcl
 provider "aws" {
@@ -79,6 +79,7 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 | dynamodb\_table\_name | The name of the DynamoDB table to use for state locking. | string | `"remote-state-lock"` | no |
 | iam\_policy\_attachment\_name | The name of the attachment. | string | `"tf-iam-role-attachment-replication-configuration"` | no |
 | iam\_policy\_name\_prefix | Creates a unique name beginning with the specified prefix. | string | `"remote-state-replication-policy"` | no |
+| iam\_role\_arn | Use IAM role of specified ARN for s3 replication instead of creating it. | string | `"null"` | no |
 | iam\_role\_name\_prefix | Creates a unique name beginning with the specified prefix. | string | `"remote-state-replication-role"` | no |
 | kms\_key\_deletion\_window\_in\_days | Duration in days after which the key is deleted after destruction of the resource, must be between 7 and 30 days. | string | `"30"` | no |
 | kms\_key\_description | The description of the key as viewed in AWS console. | string | `"The key used to encrypt the remote state bucket."` | no |
@@ -89,6 +90,7 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 | s3\_bucket\_force\_destroy | A boolean that indicates all objects should be deleted from S3 buckets so that the buckets can be destroyed without error. These objects are not recoverable. | string | `"false"` | no |
 | state\_bucket\_prefix | Creates a unique state bucket name beginning with the specified prefix. | string | `"tf-remote-state"` | no |
 | tags | A mapping of tags to assign to resources. | map | `{ "Terraform": "true" }` | no |
+| terraform\_iam\_policy\_create | Specifies whether to terraform IAM policy is created. | boolean | `true` | no |
 | terraform\_iam\_policy\_name\_prefix | Creates a unique name beginning with the specified prefix. | string | `"terraform"` | no |
 
 ## Outputs
