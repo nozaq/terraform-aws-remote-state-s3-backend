@@ -11,6 +11,11 @@ variable "tags" {
 #---------------------------------------------------------------------------------------------------
 # IAM Policy for Executing Terraform with Remote States
 #---------------------------------------------------------------------------------------------------
+variable "terraform_iam_policy_create" {
+  description = "Specifies whether to terraform IAM policy is created."
+  default     = true
+}
+
 variable "terraform_iam_policy_name_prefix" {
   description = "Creates a unique name beginning with the specified prefix."
   default     = "terraform"

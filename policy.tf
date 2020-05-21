@@ -4,6 +4,8 @@
 # https://www.terraform.io/docs/backends/types/s3.html#example-configuration
 #---------------------------------------------------------------------------------------------------
 resource "aws_iam_policy" "terraform" {
+  count = var.terraform_iam_policy_create ? 1 : 0
+
   name_prefix = var.terraform_iam_policy_name_prefix
 
   policy = <<POLICY
