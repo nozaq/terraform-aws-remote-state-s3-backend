@@ -52,6 +52,11 @@ variable "replica_bucket_prefix" {
   default     = "tf-remote-state-replica"
 }
 
+variable "iam_role_arn" {
+  description = "Use IAM role of specified ARN for s3 replication instead of creating it."
+  default     = null
+}
+
 variable "iam_role_name_prefix" {
   description = "Creates a unique name beginning with the specified prefix."
   default     = "remote-state-replication-role"

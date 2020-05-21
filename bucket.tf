@@ -1,5 +1,6 @@
 locals {
-  define_lifecycle_rule = var.noncurrent_version_expiration != null || length(var.noncurrent_version_transitions) > 0
+  define_lifecycle_rule  = var.noncurrent_version_expiration != null || length(var.noncurrent_version_transitions) > 0
+  replication_role_count = var.iam_role_arn == null ? 1 : 0
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -28,6 +29,8 @@ resource "aws_kms_key" "replica" {
 # https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-replication-config-for-kms-objects.html
 #---------------------------------------------------------------------------------------------------
 resource "aws_iam_role" "replication" {
+  count = local.replication_role_count
+
   name_prefix = var.iam_role_name_prefix
 
   assume_role_policy = <<POLICY
@@ -49,6 +52,7 @@ POLICY
 }
 
 resource "aws_iam_policy" "replication" {
+  count       = local.replication_role_count
   name_prefix = var.iam_policy_name_prefix
 
   policy = <<POLICY
@@ -120,9 +124,11 @@ POLICY
 }
 
 resource "aws_iam_policy_attachment" "replication" {
+  count = local.replication_role_count
+
   name       = var.iam_policy_attachment_name
-  roles      = [aws_iam_role.replication.name]
-  policy_arn = aws_iam_policy.replication.arn
+  roles      = [aws_iam_role.replication[0].name]
+  policy_arn = aws_iam_policy.replication[0].arn
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -202,7 +208,7 @@ resource "aws_s3_bucket" "state" {
   }
 
   replication_configuration {
-    role = aws_iam_role.replication.arn
+    role = var.iam_role_arn != null ? var.iam_role_arn : aws_iam_role.replication[0].arn
 
     rules {
       id     = "replica_configuration"
