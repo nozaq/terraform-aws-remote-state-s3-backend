@@ -1,0 +1,58 @@
+name: Terraform - backend module | pull_request_review
+on:
+  pull_request_review:
+    types: [submitted]
+    branches: ['master','develop']
+    paths: [' **path/**']
+env:
+  TF_ACTIONS_VERSION: latest
+jobs:
+  check-format:
+    name: Check format
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: 'Terraform Format'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
+        tf_actions_subcommand: 'fmt'
+        tf_actions_working_dir: '.'
+        tf_actions_comment: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  validate-examples:
+    name: Validate examples
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: 'Terraform Init - examples/simple'
+      if: github.event.review.state == 'approved'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
+        tf_actions_subcommand: 'init'
+        tf_actions_working_dir: './examples/simple'
+        tf_actions_comment: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 'Terraform Validate - examples/simple'
+      if: github.event.review.state == 'approved'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
+        tf_actions_subcommand: 'validate'
+        tf_actions_working_dir: './examples/simple'
+        tf_actions_comment: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+run: |
+echo "approved" ...
+
