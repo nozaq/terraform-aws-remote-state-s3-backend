@@ -59,12 +59,12 @@ variable "iam_role_arn" {
 
 variable "iam_role_name_prefix" {
   description = "Creates a unique name beginning with the specified prefix."
-  default     = "remote-state-replication-role"
+  default     = "tf-remote-state-replication-role"
 }
 
 variable "iam_policy_name_prefix" {
   description = "Creates a unique name beginning with the specified prefix."
-  default     = "remote-state-replication-policy"
+  default     = "tf-remote-state-replication-policy"
 }
 
 variable "iam_policy_attachment_name" {
@@ -108,7 +108,7 @@ variable "s3_bucket_force_destroy" {
 #---------------------------------------------------------------------------------------------------
 variable "dynamodb_table_name" {
   description = "The name of the DynamoDB table to use for state locking."
-  default     = "remote-state-lock"
+  default     = "tf-remote-state-lock"
 }
 
 variable "dynamodb_table_billing_mode" {
