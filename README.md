@@ -71,25 +71,38 @@ terraform {
 See [the official document](https://www.terraform.io/docs/backends/types/s3.html#example-configuration) for more detail.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | n/a |
+| aws.replica | n/a |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| dynamodb\_table\_billing\_mode | Controls how you are charged for read and write throughput and how you manage capacity. | string | `"PAY_PER_REQUEST"` | no |
-| dynamodb\_table\_name | The name of the DynamoDB table to use for state locking. | string | `"remote-state-lock"` | no |
-| iam\_policy\_attachment\_name | The name of the attachment. | string | `"tf-iam-role-attachment-replication-configuration"` | no |
-| iam\_policy\_name\_prefix | Creates a unique name beginning with the specified prefix. | string | `"remote-state-replication-policy"` | no |
-| iam\_role\_name\_prefix | Creates a unique name beginning with the specified prefix. | string | `"remote-state-replication-role"` | no |
-| kms\_key\_deletion\_window\_in\_days | Duration in days after which the key is deleted after destruction of the resource, must be between 7 and 30 days. | string | `"30"` | no |
-| kms\_key\_description | The description of the key as viewed in AWS console. | string | `"The key used to encrypt the remote state bucket."` | no |
-| kms\_key\_enable\_key\_rotation | Specifies whether key rotation is enabled. | string | `"true"` | no |
-| noncurrent\_version\_expiration | Specifies when noncurrent object versions expire. See the aws\_s3\_bucket document for detail. | object | `"null"` | no |
-| noncurrent\_version\_transitions | Specifies when noncurrent object versions transitions. See the aws\_s3\_bucket document for detail. | object | `[ { "days": 7, "storage_class": "GLACIER" } ]` | no |
-| replica\_bucket\_prefix | Creates a unique replica bucket name beginning with the specified prefix. | string | `"tf-remote-state-replica"` | no |
-| s3\_bucket\_force\_destroy | A boolean that indicates all objects should be deleted from S3 buckets so that the buckets can be destroyed without error. These objects are not recoverable. | string | `"false"` | no |
-| state\_bucket\_prefix | Creates a unique state bucket name beginning with the specified prefix. | string | `"tf-remote-state"` | no |
-| tags | A mapping of tags to assign to resources. | map | `{ "Terraform": "true" }` | no |
-| terraform\_iam\_policy\_name\_prefix | Creates a unique name beginning with the specified prefix. | string | `"terraform"` | no |
+|------|-------------|------|---------|:--------:|
+| dynamodb\_table\_billing\_mode | Controls how you are charged for read and write throughput and how you manage capacity. | `string` | `"PAY_PER_REQUEST"` | no |
+| dynamodb\_table\_name | The name of the DynamoDB table to use for state locking. | `string` | `"remote-state-lock"` | no |
+| iam\_policy\_attachment\_name | The name of the attachment. | `string` | `"tf-iam-role-attachment-replication-configuration"` | no |
+| iam\_policy\_name\_prefix | Creates a unique name beginning with the specified prefix. | `string` | `"remote-state-replication-policy"` | no |
+| iam\_role\_name\_prefix | Creates a unique name beginning with the specified prefix. | `string` | `"remote-state-replication-role"` | no |
+| kms\_key\_deletion\_window\_in\_days | Duration in days after which the key is deleted after destruction of the resource, must be between 7 and 30 days. | `number` | `30` | no |
+| kms\_key\_description | The description of the key as viewed in AWS console. | `string` | `"The key used to encrypt the remote state bucket."` | no |
+| kms\_key\_enable\_key\_rotation | Specifies whether key rotation is enabled. | `bool` | `true` | no |
+| noncurrent\_version\_expiration | Specifies when noncurrent object versions expire. See the aws\_s3\_bucket document for detail. | <pre>object({<br>    days = number<br>  })</pre> | `null` | no |
+| noncurrent\_version\_transitions | Specifies when noncurrent object versions transitions. See the aws\_s3\_bucket document for detail. | <pre>list(object({<br>    days          = number<br>    storage_class = string<br>  }))</pre> | <pre>[<br>  {<br>    "days": 7,<br>    "storage_class": "GLACIER"<br>  }<br>]</pre> | no |
+| replica\_bucket\_prefix | Creates a unique replica bucket name beginning with the specified prefix. | `string` | `"tf-remote-state-replica"` | no |
+| s3\_bucket\_force\_destroy | A boolean that indicates all objects should be deleted from S3 buckets so that the buckets can be destroyed without error. These objects are not recoverable. | `bool` | `false` | no |
+| state\_bucket\_prefix | Creates a unique state bucket name beginning with the specified prefix. | `string` | `"tf-remote-state"` | no |
+| tags | A mapping of tags to assign to resources. | `map` | <pre>{<br>  "Terraform": "true"<br>}</pre> | no |
+| terraform\_iam\_policy\_name\_prefix | Creates a unique name beginning with the specified prefix. | `string` | `"terraform"` | no |
 
 ## Outputs
 
