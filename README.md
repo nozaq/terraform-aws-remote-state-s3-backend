@@ -89,10 +89,11 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | dynamodb\_table\_billing\_mode | Controls how you are charged for read and write throughput and how you manage capacity. | `string` | `"PAY_PER_REQUEST"` | no |
-| dynamodb\_table\_name | The name of the DynamoDB table to use for state locking. | `string` | `"remote-state-lock"` | no |
+| dynamodb\_table\_name | The name of the DynamoDB table to use for state locking. | `string` | `"tf-remote-state-lock"` | no |
 | iam\_policy\_attachment\_name | The name of the attachment. | `string` | `"tf-iam-role-attachment-replication-configuration"` | no |
-| iam\_policy\_name\_prefix | Creates a unique name beginning with the specified prefix. | `string` | `"remote-state-replication-policy"` | no |
-| iam\_role\_name\_prefix | Creates a unique name beginning with the specified prefix. | `string` | `"remote-state-replication-role"` | no |
+| iam\_policy\_name\_prefix | Creates a unique name beginning with the specified prefix. | `string` | `"tf-remote-state-replication-policy"` | no |
+| iam\_role\_arn | Use IAM role of specified ARN for s3 replication instead of creating it. | `any` | `null` | no |
+| iam\_role\_name\_prefix | Creates a unique name beginning with the specified prefix. | `string` | `"tf-remote-state-replication-role"` | no |
 | kms\_key\_deletion\_window\_in\_days | Duration in days after which the key is deleted after destruction of the resource, must be between 7 and 30 days. | `number` | `30` | no |
 | kms\_key\_description | The description of the key as viewed in AWS console. | `string` | `"The key used to encrypt the remote state bucket."` | no |
 | kms\_key\_enable\_key\_rotation | Specifies whether key rotation is enabled. | `bool` | `true` | no |
@@ -102,6 +103,7 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 | s3\_bucket\_force\_destroy | A boolean that indicates all objects should be deleted from S3 buckets so that the buckets can be destroyed without error. These objects are not recoverable. | `bool` | `false` | no |
 | state\_bucket\_prefix | Creates a unique state bucket name beginning with the specified prefix. | `string` | `"tf-remote-state"` | no |
 | tags | A mapping of tags to assign to resources. | `map` | <pre>{<br>  "Terraform": "true"<br>}</pre> | no |
+| terraform\_iam\_policy\_create | Specifies whether to terraform IAM policy is created. | `bool` | `true` | no |
 | terraform\_iam\_policy\_name\_prefix | Creates a unique name beginning with the specified prefix. | `string` | `"terraform"` | no |
 
 ## Outputs

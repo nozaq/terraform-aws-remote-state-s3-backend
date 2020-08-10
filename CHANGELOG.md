@@ -2,6 +2,12 @@
 ## [Unreleased]
 
 
+<a name="0.2.2"></a>
+## [0.2.2] - 2020-08-10
+### Fix
+- remove region attribute ([#24](https://github.com/nozaq/terraform-aws-secure-baseline/issues/24))
+
+
 <a name="0.2.1"></a>
 ## [0.2.1] - 2019-08-18
 ### Fix
@@ -47,7 +53,8 @@
 <a name="0.0.1"></a>
 ## 0.0.1 - 2019-07-14
 
-[Unreleased]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.2.1...HEAD
+[Unreleased]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.2.2...HEAD
+[0.2.2]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.2.1...0.2.2
 [0.2.1]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.0.4...0.1.0
