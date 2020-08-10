@@ -11,6 +11,11 @@ variable "tags" {
 #---------------------------------------------------------------------------------------------------
 # IAM Policy for Executing Terraform with Remote States
 #---------------------------------------------------------------------------------------------------
+variable "terraform_iam_policy_create" {
+  description = "Specifies whether to terraform IAM policy is created."
+  default     = true
+}
+
 variable "terraform_iam_policy_name_prefix" {
   description = "Creates a unique name beginning with the specified prefix."
   default     = "terraform"
@@ -45,6 +50,11 @@ variable "state_bucket_prefix" {
 variable "replica_bucket_prefix" {
   description = "Creates a unique replica bucket name beginning with the specified prefix."
   default     = "tf-remote-state-replica"
+}
+
+variable "iam_role_arn" {
+  description = "Use IAM role of specified ARN for s3 replication instead of creating it."
+  default     = null
 }
 
 variable "iam_role_name_prefix" {

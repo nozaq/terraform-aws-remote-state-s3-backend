@@ -15,11 +15,11 @@ Resources are defined following best practices as described in [the official doc
 - Automatically transit non-current versions in S3 buckets to AWS S3 Glacier to optimize the storage cost.
 - Optionally you can set to expire aged non-current versions(disabled by default).
 - Create a DynamoDB table for state locking.
-- Create an IAM policy to allow permissions which Terraform needs.
+- Optionally create an IAM policy to allow permissions which Terraform needs.
 
 ## Usage
 
-The module outputs `terraform_iam_policy` which can be attached to IAM users, groups or roles running Terraform. This will allow the entity accessing remote state files and the locking table.
+The module outputs `terraform_iam_policy` which can be attached to IAM users, groups or roles running Terraform. This will allow the entity accessing remote state files and the locking table. This can optionally be disabled with `terraform_iam_policy_create = false`
 
 ```hcl
 provider "aws" {
