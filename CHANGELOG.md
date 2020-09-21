@@ -2,8 +2,14 @@
 ## [Unreleased]
 
 
+<a name="0.4.0"></a>
+## [0.4.0] - 2020-09-21
+
 <a name="0.3.1"></a>
-## [0.3.1] - 0001-01-01
+## [0.3.1] - 2020-08-10
+### Fix
+- make terraform_iam_policy to be a string ([#25](https://github.com/nozaq/terraform-aws-secure-baseline/issues/25))
+
 
 <a name="0.3.0"></a>
 ## [0.3.0] - 2020-08-10
@@ -56,7 +62,8 @@
 <a name="0.0.1"></a>
 ## 0.0.1 - 2019-07-14
 
-[Unreleased]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.3.1...HEAD
+[Unreleased]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.4.0...HEAD
+[0.4.0]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.3.1...0.4.0
 [0.3.1]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.3.0...0.3.1
 [0.3.0]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/nozaq/terraform-aws-secure-baseline/compare/0.2.0...0.2.1
