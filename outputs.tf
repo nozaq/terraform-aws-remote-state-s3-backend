@@ -13,6 +13,12 @@ output "replica_bucket" {
   value       = aws_s3_bucket.replica
 }
 
+output "log_bucket" {
+  description = "The S3 log bucket used for state S3 bucket logs storage."
+  value = try((!var.s3_bucket_activate_logging ? "" : var.s3_bucket_activate_logging.undefined),
+          can(aws_s3_bucket.log[0]) ? aws_s3_bucket.log[0] : data.aws_s3_bucket.log[0])
+}
+
 output "dynamodb_table" {
   description = "The DynamoDB table to manage lock states."
   value       = aws_dynamodb_table.lock

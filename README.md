@@ -16,6 +16,7 @@ Resources are defined following best practices as described in [the official doc
 - Optionally you can set to expire aged non-current versions(disabled by default).
 - Create a DynamoDB table for state locking.
 - Optionally create an IAM policy to allow permissions which Terraform needs.
+- Optionally activate logging for state files Bucket (off by default).
 
 ## Usage
 
@@ -100,11 +101,15 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 | noncurrent\_version\_expiration | Specifies when noncurrent object versions expire. See the aws\_s3\_bucket document for detail. | <pre>object({<br>    days = number<br>  })</pre> | `null` | no |
 | noncurrent\_version\_transitions | Specifies when noncurrent object versions transitions. See the aws\_s3\_bucket document for detail. | <pre>list(object({<br>    days          = number<br>    storage_class = string<br>  }))</pre> | <pre>[<br>  {<br>    "days": 7,<br>    "storage_class": "GLACIER"<br>  }<br>]</pre> | no |
 | replica\_bucket\_prefix | Creates a unique replica bucket name beginning with the specified prefix. | `string` | `"tf-remote-state-replica"` | no |
+| log\_bucket\_prefix | Creates a unique log bucket name beginning with the specified prefix. | `string` | `"tf-remote-state-log"` | no |
 | s3\_bucket\_force\_destroy | A boolean that indicates all objects should be deleted from S3 buckets so that the buckets can be destroyed without error. These objects are not recoverable. | `bool` | `false` | no |
 | state\_bucket\_prefix | Creates a unique state bucket name beginning with the specified prefix. | `string` | `"tf-remote-state"` | no |
 | tags | A mapping of tags to assign to resources. | `map` | <pre>{<br>  "Terraform": "true"<br>}</pre> | no |
 | terraform\_iam\_policy\_create | Specifies whether to terraform IAM policy is created. | `bool` | `true` | no |
 | terraform\_iam\_policy\_name\_prefix | Creates a unique name beginning with the specified prefix. | `string` | `"terraform"` | no |
+| s3\_bucket\_activate\_logging | Indicates if logging is to be activated on the source Bucket. | `bool` | `false` | no |
+| s3\_log\_bucket | The name of the Bucket for log storage. The \"S3 log delivery group\" should have both Objects\-write und ACL\-read, permissions on the Bucket. | `string` | `null` | no |
+| s3\_log\_prefix | The prefix to apply on Bucket logs, e.g \"logs/\". | `string` | `null` | no |
 
 ## Outputs
 
@@ -114,6 +119,7 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 | kms\_key | The KMS customer master key to encrypt state buckets. |
 | replica\_bucket | The S3 bucket to replicate the state S3 bucket. |
 | state\_bucket | The S3 bucket to store the remote state file. |
+| log\_bucket | The S3 bucket used for state S3 bucket log storage. If logging not activated, empty.  |
 | terraform\_iam\_policy | The IAM Policy to access remote state environment. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
