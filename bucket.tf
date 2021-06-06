@@ -222,8 +222,9 @@ resource "aws_s3_bucket" "replica" {
 }
 
 resource "aws_s3_bucket_policy" "state_force_ssl" {
-  bucket = aws_s3_bucket.state.id
-  policy = data.aws_iam_policy_document.state_force_ssl.json
+  depends_on = [aws_s3_bucket_public_access_block.state]
+  bucket     = aws_s3_bucket.state.id
+  policy     = data.aws_iam_policy_document.state_force_ssl.json
 }
 
 resource "aws_s3_bucket_public_access_block" "replica" {
@@ -303,9 +304,10 @@ resource "aws_s3_bucket" "state" {
 }
 
 resource "aws_s3_bucket_policy" "replica_force_ssl" {
-  provider = aws.replica
-  bucket   = aws_s3_bucket.replica.id
-  policy   = data.aws_iam_policy_document.replica_force_ssl.json
+  depends_on = [aws_s3_bucket_public_access_block.replica]
+  provider   = aws.replica
+  bucket     = aws_s3_bucket.replica.id
+  policy     = data.aws_iam_policy_document.replica_force_ssl.json
 }
 
 resource "aws_s3_bucket_public_access_block" "state" {
