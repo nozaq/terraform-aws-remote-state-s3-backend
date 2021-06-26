@@ -1,5 +1,12 @@
-provider "aws" {}
+terraform {
+  required_version = ">= 0.15"
 
-provider "aws" {
-  alias = "replica"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 3.39.0"
+
+      configuration_aliases = [aws.replica]
+    }
+  }
 }
