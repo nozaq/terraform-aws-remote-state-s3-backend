@@ -52,12 +52,6 @@ variable "replica_bucket_prefix" {
   default     = "tf-remote-state-replica"
 }
 
-variable "log_bucket_prefix" {
-  description = "Creates a unique log bucket name beginning with the specified prefix."
-  type = string
-  default     = "tf-remote-state-log"
-}
-
 variable "iam_role_arn" {
   description = "Use IAM role of specified ARN for s3 replication instead of creating it."
   default     = null
@@ -109,22 +103,15 @@ variable "s3_bucket_force_destroy" {
   default     = false
 }
 
-variable "s3_bucket_activate_logging" {
-  description = "A boolean that indicates if logging is to be activated on the source Bucket."
-  type = bool
-  default = false
+variable "s3_logging_target_bucket" {
+  description = "The name of the bucket for log storage. The \"S3 log delivery group\" should have Objects-write und ACL-read permissions on the bucket."
+  type        = string
+  default     = null
 }
 
-variable "s3_log_bucket" {
-  description = "The name of the Bucket for log storage. The \"S3 log delivery group\" should have Objects-write und ACL-read permissions on the Bucket."
-  type = string
-  default = null
-}
-
-variable "s3_log_prefix" {
-  description = "The prefix to apply on Bucket logs, e.g \"logs/\"."
-  type = string
-  default = null
+variable "s3_logging_target_prefix" {
+  description = "The prefix to apply on bucket logs, e.g \"logs/\"."
+  default     = ""
 }
 
 #---------------------------------------------------------------------------------------------------

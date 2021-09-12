@@ -237,20 +237,6 @@ resource "aws_s3_bucket_public_access_block" "replica" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket" "log" {
-  count = var.s3_log_bucket == null ? 1 : 0
-
-  bucket_prefix = var.log_bucket_prefix
-  acl = "log-delivery-write"
-  force_destroy = var.s3_bucket_force_destroy
-  tags = var.tags
-}
-
-data "aws_s3_bucket" "log" {
-  count = var.s3_log_bucket != null ? 1 : 0
-  bucket = var.s3_log_bucket
-}
-
 resource "aws_s3_bucket" "state" {
   bucket_prefix = var.state_bucket_prefix
   acl           = "private"
@@ -261,10 +247,10 @@ resource "aws_s3_bucket" "state" {
   }
 
   dynamic "logging" {
-    for_each = var.s3_bucket_activate_logging ? [true] : []
+    for_each = var.s3_logging_target_bucket != null ? [true] : []
     content {
-        target_bucket = var.s3_log_bucket == null ? aws_s3_bucket.log[0].id : var.s3_log_bucket
-        target_prefix = var.s3_log_prefix == null ? "${var.state_bucket_prefix}-logs/" : var.s3_log_prefix
+      target_bucket = var.s3_logging_target_bucket
+      target_prefix = var.s3_logging_target_prefix
     }
   }
 

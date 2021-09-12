@@ -16,7 +16,6 @@ Resources are defined following best practices as described in [the official doc
 - Optionally you can set to expire aged non-current versions(disabled by default).
 - Create a DynamoDB table for state locking.
 - Optionally create an IAM policy to allow permissions which Terraform needs.
-- Optionally activate logging for state files Bucket (off by default).
 
 ## Usage
 
@@ -67,7 +66,7 @@ terraform {
 }
 ```
 
-`THE_NAME_OF_THE_STATE_BUCKET` and `THE_ID_OF_THE_KMS_KEY` can be replaced by `state_bucket.bucket`  and `kms_key.id`  in outputs from this module respectively.
+`THE_NAME_OF_THE_STATE_BUCKET` and `THE_ID_OF_THE_KMS_KEY` can be replaced by `state_bucket.bucket` and `kms_key.id` in outputs from this module respectively.
 
 See [the official document](https://www.terraform.io/docs/backends/types/s3.html#example-configuration) for more detail.
 
@@ -129,6 +128,8 @@ No modules.
 | <a name="input_noncurrent_version_transitions"></a> [noncurrent\_version\_transitions](#input\_noncurrent\_version\_transitions) | Specifies when noncurrent object versions transitions. See the aws\_s3\_bucket document for detail. | <pre>list(object({<br>    days          = number<br>    storage_class = string<br>  }))</pre> | <pre>[<br>  {<br>    "days": 7,<br>    "storage_class": "GLACIER"<br>  }<br>]</pre> | no |
 | <a name="input_replica_bucket_prefix"></a> [replica\_bucket\_prefix](#input\_replica\_bucket\_prefix) | Creates a unique replica bucket name beginning with the specified prefix. | `string` | `"tf-remote-state-replica"` | no |
 | <a name="input_s3_bucket_force_destroy"></a> [s3\_bucket\_force\_destroy](#input\_s3\_bucket\_force\_destroy) | A boolean that indicates all objects should be deleted from S3 buckets so that the buckets can be destroyed without error. These objects are not recoverable. | `bool` | `false` | no |
+| <a name="input_s3_logging_target_bucket"></a> [s3\_logging\_target\_bucket](#input\_s3\_logging\_target\_bucket) | The name of the bucket for log storage. The "S3 log delivery group" should have Objects-write und ACL-read permissions on the bucket. | `string` | `null` | no |
+| <a name="input_s3_logging_target_prefix"></a> [s3\_logging\_target\_prefix](#input\_s3\_logging\_target\_prefix) | The prefix to apply on bucket logs, e.g "logs/". | `string` | `""` | no |
 | <a name="input_state_bucket_prefix"></a> [state\_bucket\_prefix](#input\_state\_bucket\_prefix) | Creates a unique state bucket name beginning with the specified prefix. | `string` | `"tf-remote-state"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to resources. | `map` | <pre>{<br>  "Terraform": "true"<br>}</pre> | no |
 | <a name="input_terraform_iam_policy_create"></a> [terraform\_iam\_policy\_create](#input\_terraform\_iam\_policy\_create) | Specifies whether to terraform IAM policy is created. | `bool` | `true` | no |
