@@ -246,6 +246,14 @@ resource "aws_s3_bucket" "state" {
     enabled = true
   }
 
+  dynamic "logging" {
+    for_each = var.s3_logging_target_bucket != null ? [true] : []
+    content {
+      target_bucket = var.s3_logging_target_bucket
+      target_prefix = var.s3_logging_target_prefix
+    }
+  }
+
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {

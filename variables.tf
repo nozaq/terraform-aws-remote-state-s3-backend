@@ -103,6 +103,17 @@ variable "s3_bucket_force_destroy" {
   default     = false
 }
 
+variable "s3_logging_target_bucket" {
+  description = "The name of the bucket for log storage. The \"S3 log delivery group\" should have Objects-write und ACL-read permissions on the bucket."
+  type        = string
+  default     = null
+}
+
+variable "s3_logging_target_prefix" {
+  description = "The prefix to apply on bucket logs, e.g \"logs/\"."
+  default     = ""
+}
+
 #---------------------------------------------------------------------------------------------------
 # DynamoDB Table for State Locking
 #---------------------------------------------------------------------------------------------------
