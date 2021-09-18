@@ -2,7 +2,7 @@ name: Terraform
 on:
   push:
     branches:
-    - master
+      - main
   pull_request:
 env:
   TF_ACTIONS_VERSION: latest
@@ -11,42 +11,29 @@ jobs:
     name: Check format
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
-
-    - name: 'Terraform Format'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
-        tf_actions_subcommand: 'fmt'
-        tf_actions_working_dir: '.'
-        tf_actions_comment: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: hashicorp/setup-terraform@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: "Terraform Format"
+        run: terraform fmt -check -recursive
 
   validate-examples:
     name: Validate examples
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: examples
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
-
-    - name: 'Terraform Init - examples/simple'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
-        tf_actions_subcommand: 'init'
-        tf_actions_working_dir: './examples/simple'
-        tf_actions_comment: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: 'Terraform Validate - examples/simple'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: ${{ env.TF_ACTIONS_VERSION }}
-        tf_actions_subcommand: 'validate'
-        tf_actions_working_dir: './examples/simple'
-        tf_actions_comment: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: hashicorp/setup-terraform@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check examples
+        env:
+          EXAMPLES: simple
+        run: |
+          for EXAMPLE in ${EXAMPLES}
+          do
+            echo "Validating $EXAMPLE"...
+            cd $EXAMPLE && terraform init && terraform validate && cd -
+          done
