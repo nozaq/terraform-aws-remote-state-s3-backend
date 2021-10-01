@@ -199,6 +199,14 @@ resource "aws_s3_bucket" "replica" {
     enabled = true
   }
 
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm     = "aws:kms"
+        kms_master_key_id = join("", aws_kms_key.replica.*.arn)
+      }
+    }
+  }
   dynamic "lifecycle_rule" {
     for_each = local.define_lifecycle_rule ? [true] : []
 
