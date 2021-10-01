@@ -10,7 +10,7 @@ output "state_bucket" {
 
 output "replica_bucket" {
   description = "The S3 bucket to replicate the state S3 bucket."
-  value       = aws_s3_bucket.replica
+  value       = aws_s3_bucket.replica.*
 }
 
 output "dynamodb_table" {

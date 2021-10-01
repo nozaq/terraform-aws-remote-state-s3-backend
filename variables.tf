@@ -44,12 +44,12 @@ variable "kms_key_enable_key_rotation" {
 #---------------------------------------------------------------------------------------------------
 variable "state_bucket_prefix" {
   description = "Creates a unique state bucket name beginning with the specified prefix."
-  default     = "tf-remote-state"
+  default     = "tf-remote-state-iy2-"
 }
 
 variable "replica_bucket_prefix" {
   description = "Creates a unique replica bucket name beginning with the specified prefix."
-  default     = "tf-remote-state-replica"
+  default     = "tf-remote-state-replica-iy2-"
 }
 
 variable "iam_role_arn" {
@@ -119,10 +119,16 @@ variable "s3_logging_target_prefix" {
 #---------------------------------------------------------------------------------------------------
 variable "dynamodb_table_name" {
   description = "The name of the DynamoDB table to use for state locking."
-  default     = "tf-remote-state-lock"
+  default     = "tf-remote-state-lock-iy2"
 }
 
 variable "dynamodb_table_billing_mode" {
   description = "Controls how you are charged for read and write throughput and how you manage capacity."
   default     = "PAY_PER_REQUEST"
+}
+
+variable "enable_replication" {
+  type        = bool
+  default     = true
+  description = "Set this to true to enable replication"
 }
