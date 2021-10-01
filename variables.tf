@@ -130,5 +130,5 @@ variable "dynamodb_table_billing_mode" {
 variable "enable_replication" {
   type        = bool
   default     = true
-  description = "Set this to true to enable replication"
+  description = "Set this to true to enable S3 bucket replication in another region"
 }
