@@ -132,3 +132,21 @@ variable "enable_replication" {
   default     = true
   description = "Set this to true to enable S3 bucket replication in another region"
 }
+
+variable "s3_bucket_name" {
+  default     = "my-terraform-s3-bucket-name-please-change"
+  type        = string
+  description = "If override_s3_bucket_name is true, use this bucket name for replica instead of dynamic name with bucket_prefix"
+}
+variable "s3_bucket_name_replica" {
+  default     = "my-terraform-s3-bucket-replica-name-please-change"
+  type        = string
+  description = "If override_s3_bucket_name is true, use this bucket name instead of dynamic name with bucket_prefix"
+}
+
+variable "override_s3_bucket_name" {
+  type        = bool
+  default     = true
+  description = "override s3 bucket name to disable bucket_prefix and create bucket with static name"
+}
+

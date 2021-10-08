@@ -14,6 +14,7 @@ Resources are defined following best practices as described in [the official doc
 - Enable bucket replication and object versioning to prevent accidental data loss.
 - Automatically transit non-current versions in S3 buckets to AWS S3 Glacier to optimize the storage cost.
 - Optionally you can set to expire aged non-current versions(disabled by default).
+- Optionally you can set fixed S3 bucket name to be user friendly(false by default).
 - Create a DynamoDB table for state locking.
 - Optionally create an IAM policy to allow permissions which Terraform needs.
 
