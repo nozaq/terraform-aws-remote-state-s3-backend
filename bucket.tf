@@ -1,6 +1,6 @@
 locals {
   define_lifecycle_rule  = var.noncurrent_version_expiration != null || length(var.noncurrent_version_transitions) > 0
-  replication_role_count = var.iam_role_arn == null ? 1 : 0
+  replication_role_count = var.iam_role_arn == null && var.enable_replication ? 1 : 0
 }
 
 #---------------------------------------------------------------------------------------------------
@@ -15,6 +15,7 @@ resource "aws_kms_key" "this" {
 }
 
 resource "aws_kms_key" "replica" {
+  count    = var.enable_replication ? 1 : 0
   provider = aws.replica
 
   description             = var.kms_key_description
@@ -85,7 +86,7 @@ resource "aws_iam_policy" "replication" {
         "s3:ReplicateDelete"
       ],
       "Effect": "Allow",
-      "Resource": "${aws_s3_bucket.replica.arn}/*"
+      "Resource": "${join("", aws_s3_bucket.replica.*.arn)}/*"
     },
     {
       "Effect": "Allow",
@@ -108,12 +109,12 @@ resource "aws_iam_policy" "replication" {
         "kms:Encrypt",
         "kms:GenerateDataKey"
       ],
-      "Resource": "${aws_kms_key.replica.arn}",
+      "Resource": "${join("", aws_kms_key.replica.*.arn)}",
       "Condition": {
         "StringLike": {
-          "kms:ViaService": "s3.${data.aws_region.replica.name}.amazonaws.com",
+          "kms:ViaService": "s3.${join("", data.aws_region.replica.*.name)}.amazonaws.com",
           "kms:EncryptionContext:aws:s3:arn": [
-            "${aws_s3_bucket.replica.arn}/*"
+            "${join("", aws_s3_bucket.replica.*.arn)}/*"
           ]
         }
       }
@@ -156,13 +157,14 @@ data "aws_iam_policy_document" "state_force_ssl" {
 }
 
 data "aws_iam_policy_document" "replica_force_ssl" {
+  count = var.enable_replication ? 1 : 0
   statement {
     sid     = "AllowSSLRequestsOnly"
     actions = ["s3:*"]
     effect  = "Deny"
     resources = [
-      aws_s3_bucket.replica.arn,
-      "${aws_s3_bucket.replica.arn}/*"
+      join("", aws_s3_bucket.replica.*.arn),
+      "${join("", aws_s3_bucket.replica.*.arn)}/*"
     ]
     condition {
       test     = "Bool"
@@ -182,10 +184,12 @@ data "aws_region" "state" {
 }
 
 data "aws_region" "replica" {
+  count    = var.enable_replication ? 1 : 0
   provider = aws.replica
 }
 
 resource "aws_s3_bucket" "replica" {
+  count    = var.enable_replication ? 1 : 0
   provider = aws.replica
 
   bucket_prefix = var.replica_bucket_prefix
@@ -195,6 +199,14 @@ resource "aws_s3_bucket" "replica" {
     enabled = true
   }
 
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm     = "aws:kms"
+        kms_master_key_id = join("", aws_kms_key.replica.*.arn)
+      }
+    }
+  }
   dynamic "lifecycle_rule" {
     for_each = local.define_lifecycle_rule ? [true] : []
 
@@ -228,8 +240,9 @@ resource "aws_s3_bucket_policy" "state_force_ssl" {
 }
 
 resource "aws_s3_bucket_public_access_block" "replica" {
+  count    = var.enable_replication ? 1 : 0
   provider = aws.replica
-  bucket   = aws_s3_bucket.replica.id
+  bucket   = join("", aws_s3_bucket.replica.*.id)
 
   block_public_acls       = true
   block_public_policy     = true
@@ -263,24 +276,27 @@ resource "aws_s3_bucket" "state" {
     }
   }
 
-  replication_configuration {
-    role = var.iam_role_arn != null ? var.iam_role_arn : aws_iam_role.replication[0].arn
+  dynamic "replication_configuration" {
+    for_each = var.enable_replication == true ? [1] : []
+    content {
+      role = var.iam_role_arn != null ? var.iam_role_arn : aws_iam_role.replication[0].arn
 
-    rules {
-      id     = "replica_configuration"
-      prefix = ""
-      status = "Enabled"
+      rules {
+        id     = "replica_configuration"
+        prefix = ""
+        status = "Enabled"
 
-      source_selection_criteria {
-        sse_kms_encrypted_objects {
-          enabled = true
+        source_selection_criteria {
+          sse_kms_encrypted_objects {
+            enabled = true
+          }
         }
-      }
 
-      destination {
-        bucket             = aws_s3_bucket.replica.arn
-        storage_class      = "STANDARD"
-        replica_kms_key_id = aws_kms_key.replica.arn
+        destination {
+          bucket             = aws_s3_bucket.replica[0].arn
+          storage_class      = "STANDARD"
+          replica_kms_key_id = aws_kms_key.replica[0].arn
+        }
       }
     }
   }
@@ -312,10 +328,11 @@ resource "aws_s3_bucket" "state" {
 }
 
 resource "aws_s3_bucket_policy" "replica_force_ssl" {
+  count      = var.enable_replication ? 1 : 0
   depends_on = [aws_s3_bucket_public_access_block.replica]
   provider   = aws.replica
-  bucket     = aws_s3_bucket.replica.id
-  policy     = data.aws_iam_policy_document.replica_force_ssl.json
+  bucket     = join("", aws_s3_bucket.replica.*.id)
+  policy     = join("", data.aws_iam_policy_document.replica_force_ssl.*.json)
 }
 
 resource "aws_s3_bucket_public_access_block" "state" {

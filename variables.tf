@@ -126,3 +126,9 @@ variable "dynamodb_table_billing_mode" {
   description = "Controls how you are charged for read and write throughput and how you manage capacity."
   default     = "PAY_PER_REQUEST"
 }
+
+variable "enable_replication" {
+  type        = bool
+  default     = true
+  description = "Set this to true to enable S3 bucket replication in another region"
+}
