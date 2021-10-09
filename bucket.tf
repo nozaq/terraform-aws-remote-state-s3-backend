@@ -192,7 +192,9 @@ resource "aws_s3_bucket" "replica" {
   count    = var.enable_replication ? 1 : 0
   provider = aws.replica
 
-  bucket_prefix = var.replica_bucket_prefix
+  bucket_prefix = var.override_s3_bucket_name ? null : var.replica_bucket_prefix
+  bucket        = var.override_s3_bucket_name ? var.s3_bucket_name_replica : null
+
   force_destroy = var.s3_bucket_force_destroy
 
   versioning {
@@ -251,7 +253,8 @@ resource "aws_s3_bucket_public_access_block" "replica" {
 }
 
 resource "aws_s3_bucket" "state" {
-  bucket_prefix = var.state_bucket_prefix
+  bucket_prefix = var.override_s3_bucket_name ? null : var.state_bucket_prefix
+  bucket        = var.override_s3_bucket_name ? var.s3_bucket_name : null
   acl           = "private"
   force_destroy = var.s3_bucket_force_destroy
 
