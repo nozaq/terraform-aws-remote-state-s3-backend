@@ -2,6 +2,17 @@
 ## [Unreleased]
 
 
+<a name="0.7.0"></a>
+## [0.7.0] - 2021-10-10
+### Feat
+- support to create fixed bucket name ([#43](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/43))
+- make s3 bucket replication optional ([#42](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/42))
+- support logging for state Bucket ([#37](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/37))
+
+### Fix
+- make the fixed bucket name optional ([#44](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/44))
+
+
 <a name="0.6.0"></a>
 ## [0.6.0] - 2021-06-27
 ### Fix
@@ -83,7 +94,8 @@
 <a name="0.0.1"></a>
 ## 0.0.1 - 2019-07-14
 
-[Unreleased]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.6.0...HEAD
+[Unreleased]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.7.0...HEAD
+[0.7.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.6.0...0.7.0
 [0.6.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.5.0...0.6.0
 [0.5.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.4.1...0.5.0
 [0.4.1]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.4.0...0.4.1
