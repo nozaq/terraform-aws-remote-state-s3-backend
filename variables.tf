@@ -1,6 +1,7 @@
 #---------------------------------------------------------------------------------------------------
 # General
 #---------------------------------------------------------------------------------------------------
+
 variable "tags" {
   description = "A mapping of tags to assign to resources."
   default = {
@@ -11,6 +12,7 @@ variable "tags" {
 #---------------------------------------------------------------------------------------------------
 # IAM Policy for Executing Terraform with Remote States
 #---------------------------------------------------------------------------------------------------
+
 variable "terraform_iam_policy_create" {
   description = "Specifies whether to terraform IAM policy is created."
   default     = true
@@ -24,6 +26,7 @@ variable "terraform_iam_policy_name_prefix" {
 #---------------------------------------------------------------------------------------------------
 # KMS Key for Encrypting S3 Buckets
 #---------------------------------------------------------------------------------------------------
+
 variable "kms_key_description" {
   description = "The description of the key as viewed in AWS console."
   default     = "The key used to encrypt the remote state bucket."
@@ -42,6 +45,7 @@ variable "kms_key_enable_key_rotation" {
 #---------------------------------------------------------------------------------------------------
 # S3 Buckets
 #---------------------------------------------------------------------------------------------------
+
 variable "state_bucket_prefix" {
   description = "Creates a unique state bucket name beginning with the specified prefix."
   default     = "tf-remote-state"
@@ -117,6 +121,7 @@ variable "s3_logging_target_prefix" {
 #---------------------------------------------------------------------------------------------------
 # DynamoDB Table for State Locking
 #---------------------------------------------------------------------------------------------------
+
 variable "dynamodb_table_name" {
   description = "The name of the DynamoDB table to use for state locking."
   default     = "tf-remote-state-lock"
@@ -136,6 +141,7 @@ variable "enable_replication" {
 #---------------------------------------------------------------------------------------------------
 # Optionally specifying a fixed bucket name
 #---------------------------------------------------------------------------------------------------
+
 variable "override_s3_bucket_name" {
   type        = bool
   default     = false
