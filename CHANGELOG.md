@@ -2,6 +2,14 @@
 ## [Unreleased]
 
 
+<a name="0.8.0"></a>
+## [0.8.0] - 2022-01-10
+### Refactor
+- add tflint checks
+- simplify list item extractions ([#48](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/48))
+- do not hard-code auth method in examples ([#46](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/46))
+
+
 <a name="0.7.0"></a>
 ## [0.7.0] - 2021-10-10
 ### Feat
@@ -94,7 +102,8 @@
 <a name="0.0.1"></a>
 ## 0.0.1 - 2019-07-14
 
-[Unreleased]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.7.0...HEAD
+[Unreleased]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.8.0...HEAD
+[0.8.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.7.0...0.8.0
 [0.7.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.6.0...0.7.0
 [0.6.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.5.0...0.6.0
 [0.5.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.4.1...0.5.0
