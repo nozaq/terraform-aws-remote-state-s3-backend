@@ -6,6 +6,7 @@ locals {
 #---------------------------------------------------------------------------------------------------
 # KMS Key to Encrypt S3 Bucket
 #---------------------------------------------------------------------------------------------------
+
 resource "aws_kms_key" "this" {
   description             = var.kms_key_description
   deletion_window_in_days = var.kms_key_deletion_window_in_days
@@ -25,10 +26,8 @@ resource "aws_kms_key" "replica" {
   tags = var.tags
 }
 
-#---------------------------------------------------------------------------------------------------
 # IAM Role for Replication
 # https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-replication-config-for-kms-objects.html
-#---------------------------------------------------------------------------------------------------
 resource "aws_iam_role" "replication" {
   count = local.replication_role_count
 
@@ -134,6 +133,7 @@ resource "aws_iam_policy_attachment" "replication" {
 #---------------------------------------------------------------------------------------------------
 # Bucket Policies
 #---------------------------------------------------------------------------------------------------
+
 data "aws_iam_policy_document" "state_force_ssl" {
   statement {
     sid     = "AllowSSLRequestsOnly"
@@ -180,6 +180,7 @@ data "aws_iam_policy_document" "replica_force_ssl" {
 #---------------------------------------------------------------------------------------------------
 # Buckets
 #---------------------------------------------------------------------------------------------------
+
 data "aws_region" "state" {
 }
 
