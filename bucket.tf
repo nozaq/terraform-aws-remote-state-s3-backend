@@ -85,7 +85,7 @@ resource "aws_iam_policy" "replication" {
         "s3:ReplicateDelete"
       ],
       "Effect": "Allow",
-      "Resource": "${join("", aws_s3_bucket.replica.*.arn)}/*"
+      "Resource": "${aws_s3_bucket.replica[0].arn}/*"
     },
     {
       "Effect": "Allow",
@@ -108,12 +108,12 @@ resource "aws_iam_policy" "replication" {
         "kms:Encrypt",
         "kms:GenerateDataKey"
       ],
-      "Resource": "${join("", aws_kms_key.replica.*.arn)}",
+      "Resource": "${aws_kms_key.replica[0].arn}",
       "Condition": {
         "StringLike": {
-          "kms:ViaService": "s3.${join("", data.aws_region.replica.*.name)}.amazonaws.com",
+          "kms:ViaService": "s3.${data.aws_region.replica[0].name}.amazonaws.com",
           "kms:EncryptionContext:aws:s3:arn": [
-            "${join("", aws_s3_bucket.replica.*.arn)}/*"
+            "${aws_s3_bucket.replica[0].arn}/*"
           ]
         }
       }
@@ -163,8 +163,8 @@ data "aws_iam_policy_document" "replica_force_ssl" {
     actions = ["s3:*"]
     effect  = "Deny"
     resources = [
-      join("", aws_s3_bucket.replica.*.arn),
-      "${join("", aws_s3_bucket.replica.*.arn)}/*"
+      aws_s3_bucket.replica[0].arn,
+      "${aws_s3_bucket.replica[0].arn}/*"
     ]
     condition {
       test     = "Bool"
@@ -204,7 +204,7 @@ resource "aws_s3_bucket" "replica" {
     rule {
       apply_server_side_encryption_by_default {
         sse_algorithm     = "aws:kms"
-        kms_master_key_id = join("", aws_kms_key.replica.*.arn)
+        kms_master_key_id = aws_kms_key.replica[0].arn
       }
     }
   }
@@ -246,7 +246,7 @@ resource "aws_s3_bucket_public_access_block" "replica" {
   count    = var.enable_replication ? 1 : 0
   provider = aws.replica
 
-  bucket                  = join("", aws_s3_bucket.replica.*.id)
+  bucket                  = aws_s3_bucket.replica[0].id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -335,8 +335,8 @@ resource "aws_s3_bucket_policy" "replica_force_ssl" {
   count    = var.enable_replication ? 1 : 0
   provider = aws.replica
 
-  bucket = join("", aws_s3_bucket.replica.*.id)
-  policy = join("", data.aws_iam_policy_document.replica_force_ssl.*.json)
+  bucket = aws_s3_bucket.replica[0].id
+  policy = data.aws_iam_policy_document.replica_force_ssl[0].json
 
   depends_on = [aws_s3_bucket_public_access_block.replica]
 }
