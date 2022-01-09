@@ -1,5 +1,12 @@
-- repo: git://github.com/antonbabenko/pre-commit-terraform
-  rev: v1.62.3
-  hooks:
-    - id: terraform_fmt
-    - id: terraform_docs
+repos:
+  - repo: git://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.62.3
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_docs
+        args:
+          - --args=--config=.terraform-docs.yml
+      - id: terraform_tflint
+        exclude: "test/"
+        args:
+          - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
