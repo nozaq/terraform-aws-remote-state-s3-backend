@@ -32,8 +32,7 @@ resource "aws_kms_key" "replica" {
 resource "aws_iam_role" "replication" {
   count = local.replication_role_count
 
-  name_prefix = var.iam_role_name_prefix
-
+  name_prefix        = var.iam_role_name_prefix
   assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
@@ -53,10 +52,10 @@ POLICY
 }
 
 resource "aws_iam_policy" "replication" {
-  count       = local.replication_role_count
-  name_prefix = var.iam_policy_name_prefix
+  count = local.replication_role_count
 
-  policy = <<POLICY
+  name_prefix = var.iam_policy_name_prefix
+  policy      = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -158,6 +157,7 @@ data "aws_iam_policy_document" "state_force_ssl" {
 
 data "aws_iam_policy_document" "replica_force_ssl" {
   count = var.enable_replication ? 1 : 0
+
   statement {
     sid     = "AllowSSLRequestsOnly"
     actions = ["s3:*"]
@@ -194,7 +194,6 @@ resource "aws_s3_bucket" "replica" {
 
   bucket_prefix = var.override_s3_bucket_name ? null : var.replica_bucket_prefix
   bucket        = var.override_s3_bucket_name ? var.s3_bucket_name_replica : null
-
   force_destroy = var.s3_bucket_force_destroy
 
   versioning {
@@ -209,6 +208,7 @@ resource "aws_s3_bucket" "replica" {
       }
     }
   }
+
   dynamic "lifecycle_rule" {
     for_each = local.define_lifecycle_rule ? [true] : []
 
@@ -236,16 +236,17 @@ resource "aws_s3_bucket" "replica" {
 }
 
 resource "aws_s3_bucket_policy" "state_force_ssl" {
+  bucket = aws_s3_bucket.state.id
+  policy = data.aws_iam_policy_document.state_force_ssl.json
+
   depends_on = [aws_s3_bucket_public_access_block.state]
-  bucket     = aws_s3_bucket.state.id
-  policy     = data.aws_iam_policy_document.state_force_ssl.json
 }
 
 resource "aws_s3_bucket_public_access_block" "replica" {
   count    = var.enable_replication ? 1 : 0
   provider = aws.replica
-  bucket   = join("", aws_s3_bucket.replica.*.id)
 
+  bucket                  = join("", aws_s3_bucket.replica.*.id)
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -331,16 +332,17 @@ resource "aws_s3_bucket" "state" {
 }
 
 resource "aws_s3_bucket_policy" "replica_force_ssl" {
-  count      = var.enable_replication ? 1 : 0
+  count    = var.enable_replication ? 1 : 0
+  provider = aws.replica
+
+  bucket = join("", aws_s3_bucket.replica.*.id)
+  policy = join("", data.aws_iam_policy_document.replica_force_ssl.*.json)
+
   depends_on = [aws_s3_bucket_public_access_block.replica]
-  provider   = aws.replica
-  bucket     = join("", aws_s3_bucket.replica.*.id)
-  policy     = join("", data.aws_iam_policy_document.replica_force_ssl.*.json)
 }
 
 resource "aws_s3_bucket_public_access_block" "state" {
-  bucket = aws_s3_bucket.state.id
-
+  bucket                  = aws_s3_bucket.state.id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
