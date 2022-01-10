@@ -2,6 +2,9 @@
 ## [Unreleased]
 
 
+<a name="0.8.1"></a>
+## [0.8.1] - 2022-01-10
+
 <a name="0.8.0"></a>
 ## [0.8.0] - 2022-01-10
 ### Refactor
@@ -102,7 +105,8 @@
 <a name="0.0.1"></a>
 ## 0.0.1 - 2019-07-14
 
-[Unreleased]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.8.0...HEAD
+[Unreleased]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.8.1...HEAD
+[0.8.1]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.8.0...0.8.1
 [0.8.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.7.0...0.8.0
 [0.7.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.6.0...0.7.0
 [0.6.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.5.0...0.6.0
