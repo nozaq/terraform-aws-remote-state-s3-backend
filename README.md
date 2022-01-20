@@ -77,7 +77,7 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.4 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.39.0 |
 
 ## Providers
