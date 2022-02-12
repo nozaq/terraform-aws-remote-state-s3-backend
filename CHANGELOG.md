@@ -2,6 +2,20 @@
 ## [Unreleased]
 
 
+<a name="1.0.0"></a>
+## [1.0.0] - 2022-02-12
+### Feat
+- upgrade AWS provider to v4.0+ ([#57](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/57))
+
+### Fix
+- set the minimum terraform version to 1.1.4 ([#56](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/56))
+
+### BREAKING CHANGE
+
+resources regarding S3 bucket configurations need manual
+imports after upgrade. See `docs/upgrade-1.0.md` for guidance.
+
+
 <a name="0.8.1"></a>
 ## [0.8.1] - 2022-01-10
 
@@ -105,7 +119,8 @@
 <a name="0.0.1"></a>
 ## 0.0.1 - 2019-07-14
 
-[Unreleased]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.8.1...HEAD
+[Unreleased]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/1.0.0...HEAD
+[1.0.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.8.1...1.0.0
 [0.8.1]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.8.0...0.8.1
 [0.8.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.7.0...0.8.0
 [0.7.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.6.0...0.7.0
