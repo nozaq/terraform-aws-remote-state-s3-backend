@@ -72,20 +72,24 @@ terraform {
 
 See [the official document](https://www.terraform.io/docs/backends/types/s3.html#example-configuration) for more detail.
 
+## Compatibility
+
+- Starting from v1.0, this module requires [Terraform Provider for AWS](https://github.com/terraform-providers/terraform-provider-aws) v4.0 or later. [Version 1.0 Upgrade Guide](./docs/upgrade-1.0.md) described the recommended procedure after the upgrade.
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.4 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.39.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.39.0 |
-| <a name="provider_aws.replica"></a> [aws.replica](#provider\_aws.replica) | >= 3.39.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.0 |
+| <a name="provider_aws.replica"></a> [aws.replica](#provider\_aws.replica) | >= 4.0 |
 
 ## Inputs
 
