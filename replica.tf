@@ -278,4 +278,8 @@ resource "aws_s3_bucket_replication_configuration" "state" {
       }
     }
   }
+
+  # Versioning can't be disabled when the replication configuration exists.
+  # https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-and-other-bucket-configs.html#replication-and-versioning
+  depends_on = [aws_s3_bucket_versioning.state]
 }
