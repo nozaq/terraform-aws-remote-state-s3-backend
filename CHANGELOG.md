@@ -2,6 +2,12 @@
 ## [Unreleased]
 
 
+<a name="1.0.1"></a>
+## [1.0.1] - 2022-03-05
+### Fix
+- replication depends on versioning ([#61](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/61))
+
+
 <a name="1.0.0"></a>
 ## [1.0.0] - 2022-02-12
 ### Feat
@@ -119,7 +125,8 @@ imports after upgrade. See `docs/upgrade-1.0.md` for guidance.
 <a name="0.0.1"></a>
 ## 0.0.1 - 2019-07-14
 
-[Unreleased]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/1.0.1...HEAD
+[1.0.1]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.8.1...1.0.0
 [0.8.1]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.8.0...0.8.1
 [0.8.0]: https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/0.7.0...0.8.0
