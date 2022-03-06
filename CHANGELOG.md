@@ -1,7 +1,3 @@
-<a name="unreleased"></a>
-## [Unreleased]
-
-
 <a name="1.0.1"></a>
 ## [1.0.1] - 2022-03-05
 ### Fix
