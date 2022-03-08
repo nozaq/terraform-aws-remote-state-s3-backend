@@ -1,4 +1,3 @@
-<a name="1.0.1"></a>
 ## [1.0.1] - 2022-03-05
 ### Fix
 - replication depends on versioning ([#61](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/61))
