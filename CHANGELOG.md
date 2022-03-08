@@ -1,4 +1,3 @@
-<a name="1.0.1"></a>
 ## [1.1.0](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.0.1...v1.1.0) (2022-03-08)
 
 
