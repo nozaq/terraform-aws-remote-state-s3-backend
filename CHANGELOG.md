@@ -1,3 +1,8 @@
+<a name="1.0.2"></a>
+## [1.0.2] - 2022-03-08
+### Fix
+- Enabled Server Side Encryption in Dynamo DB Table Creation ([#70](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/70))
+
 <a name="1.0.1"></a>
 ## [1.0.1] - 2022-03-05
 ### Fix
