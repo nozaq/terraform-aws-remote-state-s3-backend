@@ -52,6 +52,12 @@ variable "kms_key_enable_key_rotation" {
 # S3 Buckets
 #---------------------------------------------------------------------------------------------------
 
+variable "enable_replication" {
+  description = "Set this to true to enable S3 bucket replication in another region"
+  type        = bool
+  default     = true
+}
+
 variable "state_bucket_prefix" {
   description = "Creates a unique state bucket name beginning with the specified prefix."
   type        = string
@@ -148,13 +154,7 @@ variable "dynamodb_table_billing_mode" {
   default     = "PAY_PER_REQUEST"
 }
 
-variable "enable_replication" {
-  description = "Set this to true to enable S3 bucket replication in another region"
-  type        = bool
-  default     = true
-}
-
-variable "server_side_encryption_enabled" {
+variable "dynamodb_enable_server_side_encryption" {
   description = "Whether or not to enable encryption at rest using an AWS managed KMS customer master key (CMK)"
   type        = bool
   default     = false
