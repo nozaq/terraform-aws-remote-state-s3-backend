@@ -154,6 +154,12 @@ variable "enable_replication" {
   default     = true
 }
 
+variable "server_side_encryption_enabled" {
+  description = "Whether or not to enable encryption at rest using an AWS managed KMS customer master key (CMK)"
+  type        = bool
+  default     = false
+}
+
 #---------------------------------------------------------------------------------------------------
 # Optionally specifying a fixed bucket name
 #---------------------------------------------------------------------------------------------------
