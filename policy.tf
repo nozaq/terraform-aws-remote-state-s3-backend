@@ -14,7 +14,7 @@ resource "aws_iam_policy" "terraform" {
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": "s3:ListBucket",
+      "Action": ["s3:ListBucket", "s3:GetBucketVersioning"]
       "Resource": "${aws_s3_bucket.state.arn}"
     },
     {
@@ -27,7 +27,8 @@ resource "aws_iam_policy" "terraform" {
       "Action": [
         "dynamodb:GetItem",
         "dynamodb:PutItem",
-        "dynamodb:DeleteItem"
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
       ],
       "Resource": "${aws_dynamodb_table.lock.arn}"
     },
