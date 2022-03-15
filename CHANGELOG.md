@@ -1,9 +1,18 @@
+### [1.1.1](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.1.0...v1.1.1) (2022-03-15)
+
+
+### Bug Fixes
+
+* add permissions required by terragrunt ([#75](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/75)) ([93f327c](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/93f327ca936bc09d0694145a2374b695256b373b))
+
+
 ### [1.1.0](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.0.1...v1.1.0) (2022-03-08)
 
 
 ### Features
 
 * enable server side encryption for DynamoDB table ([c1c9262](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/c1c9262064c25d9437a97e7ea8793a4250ee6708))
+
 
 ### 1.0.1 - 2022-03-05
 ### Fix
