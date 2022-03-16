@@ -2,6 +2,9 @@
 # IAM Policy
 # See below for permissions necessary to run Terraform.
 # https://www.terraform.io/docs/backends/types/s3.html#example-configuration
+#
+# terragrunt users would also need additional permissions.
+# https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/74
 #---------------------------------------------------------------------------------------------------
 
 resource "aws_iam_policy" "terraform" {
