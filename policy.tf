@@ -17,7 +17,7 @@ resource "aws_iam_policy" "terraform" {
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": ["s3:ListBucket", "s3:GetBucketVersioning"]
+      "Action": ["s3:ListBucket", "s3:GetBucketVersioning"],
       "Resource": "${aws_s3_bucket.state.arn}"
     },
     {
