@@ -6,6 +6,13 @@
 * add permissions required by terragrunt ([#75](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/75)) ([93f327c](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/93f327ca936bc09d0694145a2374b695256b373b))
 
 
+### [1.1.2](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.1.1...v1.1.2) (2022-03-16)
+
+
+### Bug Fixes
+
+* updated policy to fix syntax issue ([#80](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/80)) ([bb5e8d9](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/bb5e8d9ca9e8b9993cc7143d6ae8ee963f15f053))
+
 ### [1.1.0](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.0.1...v1.1.0) (2022-03-08)
 
 
