@@ -171,12 +171,12 @@ variable "override_s3_bucket_name" {
 }
 
 variable "s3_bucket_name" {
-  description = "If override_s3_bucket_name is true, use this bucket name for replica instead of dynamic name with bucket_prefix"
+  description = "If override_s3_bucket_name is true, use this bucket name instead of dynamic name with bucket_prefix"
   type        = string
   default     = ""
 }
 variable "s3_bucket_name_replica" {
-  description = "If override_s3_bucket_name is true, use this bucket name instead of dynamic name with bucket_prefix"
+  description = "If override_s3_bucket_name is true, use this bucket name for replica instead of dynamic name with bucket_prefix"
   type        = string
   default     = ""
 }
