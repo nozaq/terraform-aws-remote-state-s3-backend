@@ -24,8 +24,6 @@ $ terraform import "$MODULE_PATH.aws_s3_bucket_acl.state" "$STATE_BUCKET"
 
 $ terraform import "$MODULE_PATH.aws_s3_bucket_versioning.state" "$STATE_BUCKET"
 
-$ terraform import "$MODULE_PATH.aws_s3_bucket_logging.state[0]" "$STATE_BUCKET"
-
 $ terraform import "$MODULE_PATH.aws_s3_bucket_server_side_encryption_configuration.state" "$STATE_BUCKET"
 
 $ terraform import "$MODULE_PATH.aws_s3_bucket_lifecycle_configuration.state" "$STATE_BUCKET"
