@@ -260,8 +260,13 @@ resource "aws_s3_bucket_replication_configuration" "state" {
 
   rule {
     id     = "replica_configuration"
-    prefix = ""
     status = "Enabled"
+
+    filter {}
+
+    delete_marker_replication {
+      status = "Disabled"
+    }
 
     source_selection_criteria {
       sse_kms_encrypted_objects {
