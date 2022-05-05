@@ -30,6 +30,12 @@ variable "terraform_iam_policy_name_prefix" {
 # KMS Key for Encrypting S3 Buckets
 #---------------------------------------------------------------------------------------------------
 
+variable "kms_key_alias" {
+  description = "The alias for the KMS key as viewed in AWS console. It will be automatically prefixed with `alias/`"
+  type        = string
+  default     = "tf-remote-state-key"
+}
+
 variable "kms_key_description" {
   description = "The description of the key as viewed in AWS console."
   type        = string
