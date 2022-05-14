@@ -3,6 +3,11 @@ output "kms_key" {
   value       = aws_kms_key.this
 }
 
+output "kms_key_alias" {
+  description = "The alias of the KMS customer master key used to encrypt state buckets."
+  value       = aws_kms_key.this
+}
+
 output "state_bucket" {
   description = "The S3 bucket to store the remote state file."
   value       = aws_s3_bucket.state
