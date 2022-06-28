@@ -10,9 +10,9 @@ locals {
 }
 
 resource "aws_dynamodb_table" "lock" {
-  name         = var.dynamodb_table_name
-  billing_mode = var.dynamodb_table_billing_mode
-  hash_key     = local.lock_key_id
+  name           = var.dynamodb_table_name
+  billing_mode   = var.dynamodb_table_billing_mode
+  hash_key       = local.lock_key_id
 
   attribute {
     name = local.lock_key_id
@@ -27,6 +27,15 @@ resource "aws_dynamodb_table" "lock" {
   point_in_time_recovery {
     enabled = true
   }
+
+  dynamic "replica" {
+    for_each = var.enable_replication == true ? [1] : []
+    content {
+      region_name = data.aws_region.replica[0].name
+      kms_key_arn = var.dynamodb_enable_server_side_encryption ? aws_kms_key.replica[0].arn : null
+    }
+  }
+  stream_enabled = var.dynamodb_enable_server_side_encryption ? true : null
 
   tags = var.tags
 }
