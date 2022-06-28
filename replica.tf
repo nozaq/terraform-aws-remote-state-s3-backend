@@ -47,6 +47,7 @@ resource "aws_iam_role" "replication" {
 }
 POLICY
 
+  permissions_boundary = var.iam_role_permissions_boundary
   tags = var.tags
 }
 
