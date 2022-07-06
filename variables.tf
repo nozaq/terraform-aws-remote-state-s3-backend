@@ -82,6 +82,12 @@ variable "iam_role_arn" {
   default     = null
 }
 
+variable "iam_role_permissions_boundary" {
+  description = "Use permissions_boundary with the replication IAM role."
+  type        = string
+  default     = null
+}
+
 variable "iam_role_name_prefix" {
   description = "Creates a unique name beginning with the specified prefix."
   type        = string
