@@ -15,7 +15,7 @@ output "state_bucket" {
 
 output "replica_bucket" {
   description = "The S3 bucket to replicate the state S3 bucket."
-  value       = aws_s3_bucket.replica.*
+  value       = try(aws_s3_bucket.replica[0], null)
 }
 
 output "dynamodb_table" {
