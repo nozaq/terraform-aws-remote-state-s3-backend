@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.2.0...v1.3.0) (2022-07-09)
+
+
+### Features
+
+* added the capability to specify an alias for the KMS Key ([#87](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/87)) ([fc70af4](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/fc70af4572c686045c95936e0a1152d089fe749b))
+* allow replication for DDB ([#91](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/91)) ([e63200a](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/e63200a17c78a109c89f81e16eb9566b7aef2009))
+* optionally set the IAM policy boundary ([#90](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/90)) ([bfb3701](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/bfb3701fe1c222b82c77f6e60eb0903105e5b081))
+
+
+### Bug Fixes
+
+* replace output to be either null or the actual value. ([#92](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/92)) ([a8141fd](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/a8141fd78214154dd2480b194d4efab11a233a7c))
+
 ## [1.2.0](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.1.2...v1.2.0) (2022-04-16)
 
 
