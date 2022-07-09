@@ -129,7 +129,8 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 |------|-------------|
 | <a name="output_dynamodb_table"></a> [dynamodb\_table](#output\_dynamodb\_table) | The DynamoDB table to manage lock states. |
 | <a name="output_kms_key"></a> [kms\_key](#output\_kms\_key) | The KMS customer master key to encrypt state buckets. |
-| <a name="output_kms_key_alias"></a> [kms\_key\_alias](#output\_kms\_key\_alias) | The alias of the KMS customer master key used to encrypt state buckets. |
+| <a name="output_kms_key_alias"></a> [kms\_key\_alias](#output\_kms\_key\_alias) | The alias of the KMS customer master key used to encrypt state bucket and dynamodb. |
+| <a name="output_kms_key_replica"></a> [kms\_key\_replica](#output\_kms\_key\_replica) | The KMS customer master key to encrypt replica bucket and dynamodb. |
 | <a name="output_replica_bucket"></a> [replica\_bucket](#output\_replica\_bucket) | The S3 bucket to replicate the state S3 bucket. |
 | <a name="output_state_bucket"></a> [state\_bucket](#output\_state\_bucket) | The S3 bucket to store the remote state file. |
 | <a name="output_terraform_iam_policy"></a> [terraform\_iam\_policy](#output\_terraform\_iam\_policy) | The IAM Policy to access remote state environment. |
