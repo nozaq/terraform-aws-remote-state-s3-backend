@@ -35,7 +35,6 @@ resource "aws_dynamodb_table" "lock" {
       kms_key_arn = var.dynamodb_enable_server_side_encryption ? aws_kms_key.replica[0].arn : null
     }
   }
-  stream_enabled = var.dynamodb_enable_server_side_encryption ? true : null
 
   tags = var.tags
 }
