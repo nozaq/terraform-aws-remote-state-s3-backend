@@ -31,7 +31,8 @@ resource "aws_kms_key" "replica" {
 resource "aws_iam_role" "replication" {
   count = local.replication_role_count
 
-  name_prefix        = var.iam_role_name_prefix
+  name_prefix        = var.override_iam_role_name ? null : var.iam_role_name_prefix
+  name               = var.override_iam_role_name ? var.iam_role_name : null
   assume_role_policy = <<POLICY
 {
   "Version": "2012-10-17",
@@ -54,7 +55,8 @@ POLICY
 resource "aws_iam_policy" "replication" {
   count = local.replication_role_count
 
-  name_prefix = var.iam_policy_name_prefix
+  name_prefix = var.override_iam_policy_name ? null : var.iam_policy_name_prefix
+  name        = var.override_iam_policy_name ? var.iam_policy_name : null
   policy      = <<POLICY
 {
   "Version": "2012-10-17",
@@ -121,6 +123,8 @@ resource "aws_iam_policy" "replication" {
   ]
 }
 POLICY
+
+  tags = var.tags
 }
 
 resource "aws_iam_policy_attachment" "replication" {

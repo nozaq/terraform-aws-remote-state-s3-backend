@@ -193,3 +193,50 @@ variable "s3_bucket_name_replica" {
   default     = ""
 }
 
+#---------------------------------------------------------------------------------------------------
+# Optionally specifying a fixed iam policy name
+#---------------------------------------------------------------------------------------------------
+
+variable "override_iam_policy_name" {
+  description = "override iam policy name to disable policy_prefix and create policy with static name"
+  type        = bool
+  default     = false
+}
+
+variable "iam_policy_name" {
+  description = "If override_iam_policy_name is true, use this policy name instead of dynamic name with policy_prefix"
+  type        = string
+  default     = ""
+}
+
+#---------------------------------------------------------------------------------------------------
+# Optionally specifying a fixed iam role name
+#---------------------------------------------------------------------------------------------------
+
+variable "override_iam_role_name" {
+  description = "override iam role name to disable role_prefix and create role with static name"
+  type        = bool
+  default     = false
+}
+
+variable "iam_role_name" {
+  description = "If override_iam_role_name is true, use this role name instead of dynamic name with role_prefix"
+  type        = string
+  default     = ""
+}
+
+#---------------------------------------------------------------------------------------------------
+# Optionally specifying a fixed terraform iam policy name
+#---------------------------------------------------------------------------------------------------
+
+variable "override_terraform_iam_policy_name" {
+  description = "override terraform iam policy name to disable policy_prefix and create policy with static name"
+  type        = bool
+  default     = false
+}
+
+variable "terraform_iam_policy_name" {
+  description = "If override_terraform_iam_policy_name is true, use this policy name instead of dynamic name with policy_prefix"
+  type        = string
+  default     = ""
+}
