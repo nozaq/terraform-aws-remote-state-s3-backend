@@ -187,7 +187,7 @@ variable "s3_bucket_name" {
   type        = string
   default     = ""
   validation {
-    condition     = length(regexall("^[A-Za-z0-9][A-Za-z0-9\-.]{1,61}[A-Za-z0-9]$", var.s3_bucket_name)) > 0
+    condition     = length(regexall("^[A-Za-z0-9][A-Za-z0-9\\-.]{1,61}[A-Za-z0-9]$", var.s3_bucket_name)) > 0
     error_message = "Input variable s3_bucket_name is invalid. Please refer to https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html"
   }
 }
@@ -196,7 +196,7 @@ variable "s3_bucket_name_replica" {
   type        = string
   default     = ""
     validation {
-    condition     = length(regexall("^[A-Za-z0-9][A-Za-z0-9\-.]{1,61}[A-Za-z0-9]$", var.s3_bucket_name_replica)) > 0
+    condition     = length(regexall("^[A-Za-z0-9][A-Za-z0-9\\-.]{1,61}[A-Za-z0-9]$", var.s3_bucket_name_replica)) > 0
     error_message = "Input variable s3_bucket_name_replica is invalid. Please refer to https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html"
   }
 }
