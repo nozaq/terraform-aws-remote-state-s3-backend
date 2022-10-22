@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.3.3...v1.4.0) (2022-10-22)
+
+
+### Features
+
+* validate bucket names ([#102](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/102)) ([f35f913](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/f35f9138ba7345da04e617ef5f3229bc2a18b3a0))
+
 ## [1.3.3](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.3.2...v1.3.3) (2022-07-23)
 
 
