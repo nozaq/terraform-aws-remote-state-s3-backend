@@ -174,8 +174,10 @@ resource "aws_s3_bucket" "replica" {
 }
 
 resource "aws_s3_bucket_ownership_controls" "replica" {
-  bucket   = aws_s3_bucket.replica[0].id
+  count    = var.enable_replication ? 1 : 0
   provider = aws.replica
+
+  bucket = aws_s3_bucket.replica[0].id
 
   rule {
     object_ownership = "BucketOwnerPreferred"
