@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.4.0...v1.5.0) (2023-04-28)
+
+
+### Features
+
+* enable ACLs for new S3 buckets after AWS changed defaults ([#111](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/111)) ([42f63c6](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/42f63c6d76ecff16b94eef07c36902b292243c98))
+
+
+### Bug Fixes
+
+* crash when replication is disabled ([#113](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/113)) ([30a9e9f](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/30a9e9f278936d601c69e95fd78d48182e8fd8bf))
+
 ## [1.4.0](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.3.3...v1.4.0) (2022-10-22)
 
 
