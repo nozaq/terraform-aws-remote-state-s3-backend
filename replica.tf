@@ -173,9 +173,19 @@ resource "aws_s3_bucket" "replica" {
   tags = var.tags
 }
 
-resource "aws_s3_bucket_acl" "replica" {
-  count    = var.enable_replication ? 1 : 0
+resource "aws_s3_bucket_ownership_controls" "replica" {
+  bucket   = aws_s3_bucket.replica[0].id
   provider = aws.replica
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "replica" {
+  depends_on = [aws_s3_bucket_ownership_controls.replica]
+  count      = var.enable_replication ? 1 : 0
+  provider   = aws.replica
 
 
   bucket = aws_s3_bucket.replica[0].id
