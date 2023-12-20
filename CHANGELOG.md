@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0](https://github.com/pcanham/terraform-aws-remote-state-s3-backend/compare/v2.0.0...v2.1.0) (2023-12-20)
+
+
+### Features
+
+* install trivy to pre-commit action ([#5](https://github.com/pcanham/terraform-aws-remote-state-s3-backend/issues/5)) ([454d3a9](https://github.com/pcanham/terraform-aws-remote-state-s3-backend/commit/454d3a9aa4778f3f957cdb73ed674d2540da1676))
+
 ## [2.0.0](https://github.com/pcanham/terraform-aws-remote-state-s3-backend/compare/v1.5.0...v2.0.0) (2023-12-20)
 
 
