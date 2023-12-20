@@ -11,3 +11,5 @@ repos:
         args:
           - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
       - id: terraform_trivy
+        args:
+          - --args=--skip-dirs=".devcontainer"
