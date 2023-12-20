@@ -10,3 +10,4 @@ repos:
         exclude: "test/"
         args:
           - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
+      - id: terraform_trivy
