@@ -14,12 +14,12 @@ jobs:
           sudo wget https://github.com/aquasecurity/trivy/releases/download/v0.48.1/trivy_0.48.1_Linux-64bit.deb
           sudo dpkg -i trivy_0.48.1_Linux-64bit.deb
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Terraform min/max versions
         id: minMax
-        uses: clowdhaus/terraform-min-max@v1.0.4
+        uses: clowdhaus/terraform-min-max@v1.2.7
       - name: Pre-commit Terraform ${{ steps.minMax.outputs.maxVersion }}
-        uses: clowdhaus/terraform-composite-actions/pre-commit@v1.4.1
+        uses: clowdhaus/terraform-composite-actions/pre-commit@v1.8.3
         with:
           terraform-version: ${{ steps.minMax.outputs.maxVersion }}
           terraform-docs-version: v0.17.0
@@ -31,9 +31,9 @@ jobs:
         shell: bash
         working-directory: examples
     steps:
-      - uses: hashicorp/setup-terraform@v1
+      - uses: hashicorp/setup-terraform@v3
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Check examples
         env:
           EXAMPLES: simple
