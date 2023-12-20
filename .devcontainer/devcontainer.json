@@ -17,5 +17,7 @@
 			]
 		}
 	},
-	"postCreateCommand": "pre-commit install"
+	"postCreateCommand": "pre-commit install",
+  "containerUser": "vscode",
+  "remoteUser": "vscode"
 }
