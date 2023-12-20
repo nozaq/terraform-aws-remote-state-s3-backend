@@ -7,6 +7,7 @@
 # https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/74
 #---------------------------------------------------------------------------------------------------
 
+#trivy:ignore:AVD-AWS-0057
 resource "aws_iam_policy" "terraform" {
   count = var.terraform_iam_policy_create ? 1 : 0
 

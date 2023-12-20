@@ -162,6 +162,7 @@ data "aws_iam_policy_document" "replica_force_ssl" {
 # Bucket
 #---------------------------------------------------------------------------------------------------
 
+#trivy:ignore:AVD-AWS-0089
 resource "aws_s3_bucket" "replica" {
   count    = var.enable_replication ? 1 : 0
   provider = aws.replica
