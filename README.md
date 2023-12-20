@@ -83,14 +83,14 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.4 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.3 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.31.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.3 |
-| <a name="provider_aws.replica"></a> [aws.replica](#provider\_aws.replica) | >= 4.3 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.31.0 |
+| <a name="provider_aws.replica"></a> [aws.replica](#provider\_aws.replica) | >= 5.31.0 |
 
 ## Inputs
 

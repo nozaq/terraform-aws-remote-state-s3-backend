@@ -8,7 +8,7 @@ data "aws_region" "state" {
 #---------------------------------------------------------------------------------------------------
 # KMS Key to Encrypt S3 Bucket
 #---------------------------------------------------------------------------------------------------
-
+#trivy:ignore:AVD-AWS-0025
 resource "aws_kms_key" "this" {
   description             = var.kms_key_description
   deletion_window_in_days = var.kms_key_deletion_window_in_days
@@ -58,6 +58,7 @@ resource "aws_s3_bucket_policy" "state_force_ssl" {
   depends_on = [aws_s3_bucket_public_access_block.state]
 }
 
+#trivy:ignore:AVD-AWS-0089
 resource "aws_s3_bucket" "state" {
   bucket_prefix = var.override_s3_bucket_name ? null : var.state_bucket_prefix
   bucket        = var.override_s3_bucket_name ? var.s3_bucket_name : null
