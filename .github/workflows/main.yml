@@ -9,6 +9,10 @@ jobs:
     name: Pre-commit checks
     runs-on: ubuntu-latest
     steps:
+      - name: Install trivy
+        run: |
+          sudo wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
+          sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
       - name: Checkout
         uses: actions/checkout@v2
       - name: Terraform min/max versions
