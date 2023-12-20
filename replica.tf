@@ -26,6 +26,17 @@ resource "aws_kms_key" "replica" {
 # Roles & Policies
 #---------------------------------------------------------------------------------------------------
 
+data "aws_iam_policy_document" "s3_assume_role" {
+  statement {
+    effect = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["s3.amazonaws.com"]
+    }
+    actions = ["sts:AssumeRole"]
+  }
+}
+
 # IAM Role for Replication
 # https://docs.aws.amazon.com/AmazonS3/latest/dev/crr-replication-config-for-kms-objects.html
 resource "aws_iam_role" "replication" {
@@ -33,23 +44,84 @@ resource "aws_iam_role" "replication" {
 
   name_prefix        = var.override_iam_role_name ? null : var.iam_role_name_prefix
   name               = var.override_iam_role_name ? var.iam_role_name : null
-  assume_role_policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "s3.amazonaws.com"
-      },
-      "Effect": "Allow"
-    }
-  ]
-}
-POLICY
+  assume_role_policy = data.aws_iam_policy_document.s3_assume_role.json
 
   permissions_boundary = var.iam_role_permissions_boundary
   tags                 = var.tags
+}
+
+#trivy:ignore:AVD-AWS-0057
+data "aws_iam_policy_document" "s3_replication" {
+  statement {
+    actions = [
+      "s3:GetReplicationConfiguration",
+      "s3:ListBucket"
+    ]
+    effect = "Allow"
+    resources = [
+      aws_s3_bucket.state.arn,
+      "${aws_s3_bucket.state.arn}/*"
+    ]
+  }
+  statement {
+    actions = [
+      "s3:GetObjectVersionForReplication",
+      "s3:GetObjectVersionAcl"
+    ]
+    effect = "Allow"
+    resources = [
+      "${aws_s3_bucket.state.arn}/*"
+    ]
+  }
+  statement {
+    actions = [
+      "s3:ReplicateObject",
+      "s3:ReplicateDelete"
+    ]
+    effect = "Allow"
+    resources = [
+      "${aws_s3_bucket.replica[0].arn}/*"
+    ]
+  }
+  statement {
+    actions = [
+      "kms:Decrypt",
+    ]
+    resources = [
+      aws_kms_key.this.arn,
+    ]
+    condition {
+      test     = "StringLike"
+      variable = "kms:ViaService"
+      values   = "s3.${data.aws_region.state.name}.amazonaws.com"
+    }
+    condition {
+      test     = "StringLike"
+      variable = "kms:EncryptionContext:aws:s3:arn"
+      values   = "${aws_s3_bucket.state.arn}/*"
+    }
+  }
+  statement {
+    actions = [
+      "kms:Encrypt",
+      "kms:GenerateDataKey"
+    ]
+    resources = [
+      aws_kms_key.replica[0].arn,
+    ]
+    condition {
+      test     = "StringLike"
+      variable = "kms:ViaService"
+      values   = "s3.${data.aws_region.replica[0].name}.amazonaws.com"
+    }
+    condition {
+      test     = "StringLike"
+      variable = "kms:EncryptionContext:aws:s3:arn"
+      values   = "${aws_s3_bucket.replica[0].arn}/*"
+    }
+  }
+
+
 }
 
 resource "aws_iam_policy" "replication" {
@@ -57,72 +129,7 @@ resource "aws_iam_policy" "replication" {
 
   name_prefix = var.override_iam_policy_name ? null : var.iam_policy_name_prefix
   name        = var.override_iam_policy_name ? var.iam_policy_name : null
-  policy      = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": [
-        "s3:GetReplicationConfiguration",
-        "s3:ListBucket"
-      ],
-      "Effect": "Allow",
-      "Resource": [
-        "${aws_s3_bucket.state.arn}"
-      ]
-    },
-    {
-      "Action": [
-        "s3:GetObjectVersionForReplication",
-        "s3:GetObjectVersionAcl"
-      ],
-      "Effect": "Allow",
-      "Resource": [
-        "${aws_s3_bucket.state.arn}/*"
-      ]
-    },
-    {
-      "Action": [
-        "s3:ReplicateObject",
-        "s3:ReplicateDelete"
-      ],
-      "Effect": "Allow",
-      "Resource": "${aws_s3_bucket.replica[0].arn}/*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "kms:Decrypt"
-      ],
-      "Resource": "${aws_kms_key.this.arn}",
-      "Condition": {
-        "StringLike": {
-          "kms:ViaService": "s3.${data.aws_region.state.name}.amazonaws.com",
-          "kms:EncryptionContext:aws:s3:arn": [
-            "${aws_s3_bucket.state.arn}/*"
-          ]
-        }
-      }
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "kms:Encrypt",
-        "kms:GenerateDataKey"
-      ],
-      "Resource": "${aws_kms_key.replica[0].arn}",
-      "Condition": {
-        "StringLike": {
-          "kms:ViaService": "s3.${data.aws_region.replica[0].name}.amazonaws.com",
-          "kms:EncryptionContext:aws:s3:arn": [
-            "${aws_s3_bucket.replica[0].arn}/*"
-          ]
-        }
-      }
-    }
-  ]
-}
-POLICY
+  policy      = data.aws_iam_policy_document.s3_replication.json
 
   tags = var.tags
 }
