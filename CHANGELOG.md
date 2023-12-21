@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.5.0...v1.6.0) (2023-12-21)
+
+
+### Features
+
+* add a deletion protection flag for DynamoDB table ([#122](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/122)) ([41ab8a9](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/41ab8a975202fe2df4872f9a5f281d2dc26674f8))
+
 ## [1.5.0](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.4.0...v1.5.0) (2023-04-28)
 
 
