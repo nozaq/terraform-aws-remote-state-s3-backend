@@ -1,21 +1,22 @@
 {
-	"name": "Terraform",
-	"build": {
-		"dockerfile": "./Dockerfile",
-		"context": "."
-	},
-	"features": {
-		"ghcr.io/devcontainers/features/terraform:1": {
-			"version": "latest",
-			"installTerraformDocs": true
-		}
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"EditorConfig.EditorConfig"
-			]
-		}
-	},
-	"postCreateCommand": "pre-commit install"
+  "name": "Terraform",
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": "."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/terraform:1": {
+      "version": "latest",
+      "installTerraformDocs": true
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "GitHub.copilot"
+      ]
+    }
+  },
+  "postCreateCommand": "pre-commit install"
 }
