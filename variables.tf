@@ -172,6 +172,12 @@ variable "dynamodb_enable_server_side_encryption" {
   default     = false
 }
 
+variable "dynamodb_deletion_protection_enabled" {
+  description = "Whether or not to enable deletion protection on the DynamoDB table"
+  type        = bool
+  default     = true
+}
+
 #---------------------------------------------------------------------------------------------------
 # Optionally specifying a fixed bucket name
 #---------------------------------------------------------------------------------------------------
