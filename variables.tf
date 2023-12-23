@@ -54,6 +54,12 @@ variable "kms_key_enable_key_rotation" {
   default     = true
 }
 
+variable "kms_key_policy" {
+  description = "The key policy for the KMS key."
+  type        = string
+  default     = null
+}
+
 #---------------------------------------------------------------------------------------------------
 # S3 Buckets
 #---------------------------------------------------------------------------------------------------
