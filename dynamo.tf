@@ -22,7 +22,7 @@ resource "aws_dynamodb_table" "lock" {
 
   server_side_encryption {
     enabled     = var.dynamodb_enable_server_side_encryption
-    kms_key_arn = aws_kms_key.this.arn
+    kms_key_arn = length(data.aws_kms_key.existing_kms_key) == 1 ? data.aws_kms_key.existing_kms_key[0].arn : aws_kms_key.this[0].arn
   }
 
   point_in_time_recovery {
@@ -33,7 +33,7 @@ resource "aws_dynamodb_table" "lock" {
     for_each = var.enable_replication == true ? [1] : []
     content {
       region_name = data.aws_region.replica[0].name
-      kms_key_arn = var.dynamodb_enable_server_side_encryption ? aws_kms_key.replica[0].arn : null
+      kms_key_arn = var.dynamodb_enable_server_side_encryption ? length(data.aws_kms_key.existing_kms_key_replica) == 1 ? data.aws_kms_key.existing_kms_key_replica[0].arn : aws_kms_key.replica[0].arn : null
     }
   }
   stream_enabled   = var.enable_replication
