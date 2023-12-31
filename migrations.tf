@@ -2,8 +2,8 @@
 # Migrations to 0.7.0
 # --------------------------------------------------------------------------------------------------
 locals {
-  kms_key_replica       = length(data.aws_kms_key.existing_kms_key_replica) == 1 ? data.aws_kms_key.existing_kms_key_replica : aws_kms_key.replica
-  kms_key_replica_array = length(data.aws_kms_key.existing_kms_key_replica) == 1 ? data.aws_kms_key.existing_kms_key_replica[0] : aws_kms_key.replica[0]
+  kms_key_replica       = var.enable_replication ? length(data.aws_kms_key.existing_kms_key_replica) == 1 ? data.aws_kms_key.existing_kms_key_replica : aws_kms_key.replica : null
+  kms_key_replica_array = var.enable_replication ? length(data.aws_kms_key.existing_kms_key_replica) == 1 ? data.aws_kms_key.existing_kms_key_replica[0] : aws_kms_key.replica[0] : null
 }
 
 moved {
