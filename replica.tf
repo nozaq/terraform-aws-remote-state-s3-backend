@@ -1,5 +1,6 @@
 locals {
-  replication_role_count = var.iam_role_arn == null && var.enable_replication ? 1 : 0
+  replication_role_count            = var.iam_role_arn == null && var.enable_replication ? 1 : 0
+  existing_kms_key_replica_no_exist = length(data.aws_kms_key.existing_kms_key_replica) == 1 ? 0 : 1
 }
 
 data "aws_region" "replica" {
@@ -11,8 +12,13 @@ data "aws_region" "replica" {
 # KMS Key to Encrypt S3 Bucket
 #---------------------------------------------------------------------------------------------------
 
+data "aws_kms_key" "existing_kms_key_replica" {
+  count  = length(var.existing_kms_key_replica[*])
+  key_id = var.existing_kms_key_replica
+}
+
 resource "aws_kms_key" "replica" {
-  count    = var.enable_replication ? 1 : 0
+  count    = var.enable_replication ? local.existing_kms_key_replica_no_exist : 0
   provider = aws.replica
 
   description             = var.kms_key_description
@@ -94,7 +100,7 @@ resource "aws_iam_policy" "replication" {
       "Action": [
         "kms:Decrypt"
       ],
-      "Resource": "${aws_kms_key.this.arn}",
+      "Resource": "${length(data.aws_kms_key.existing_kms_key) == 1 ? data.aws_kms_key.existing_kms_key[0].arn : aws_kms_key.this[0].arn}",
       "Condition": {
         "StringLike": {
           "kms:ViaService": "s3.${data.aws_region.state.name}.amazonaws.com",
@@ -110,7 +116,7 @@ resource "aws_iam_policy" "replication" {
         "kms:Encrypt",
         "kms:GenerateDataKey"
       ],
-      "Resource": "${aws_kms_key.replica[0].arn}",
+      "Resource": "${length(data.aws_kms_key.existing_kms_key_replica) == 1 ? data.aws_kms_key.existing_kms_key_replica[0].arn : aws_kms_key.replica[0].arn}",
       "Condition": {
         "StringLike": {
           "kms:ViaService": "s3.${data.aws_region.replica[0].name}.amazonaws.com",
@@ -214,7 +220,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "replica" {
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm     = "aws:kms"
-      kms_master_key_id = aws_kms_key.replica[0].arn
+      kms_master_key_id = length(data.aws_kms_key.existing_kms_key_replica) == 1 ? data.aws_kms_key.existing_kms_key_replica[0].arn : aws_kms_key.replica[0].arn
     }
   }
 }
@@ -296,7 +302,7 @@ resource "aws_s3_bucket_replication_configuration" "state" {
       storage_class = "STANDARD"
 
       encryption_configuration {
-        replica_kms_key_id = aws_kms_key.replica[0].arn
+        replica_kms_key_id = length(data.aws_kms_key.existing_kms_key_replica) == 1 ? data.aws_kms_key.existing_kms_key_replica[0].arn : aws_kms_key.replica[0].arn
       }
     }
   }

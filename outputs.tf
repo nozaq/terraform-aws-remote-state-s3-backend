@@ -1,6 +1,6 @@
 output "kms_key" {
   description = "The KMS customer master key to encrypt state buckets."
-  value       = aws_kms_key.this
+  value       = length(data.aws_kms_key.existing_kms_key) == 1 ? data.aws_kms_key.existing_kms_key[0] : aws_kms_key.this[0]
 }
 
 output "kms_key_alias" {
@@ -25,7 +25,7 @@ output "dynamodb_table" {
 
 output "kms_key_replica" {
   description = "The KMS customer master key to encrypt replica bucket and dynamodb."
-  value       = try(aws_kms_key.replica[0], null)
+  value       = try(length(data.aws_kms_key.existing_kms_key_replica) == 1 ? data.aws_kms_key.existing_kms_key_replica[0] : aws_kms_key.replica[0], null)
 }
 
 output "terraform_iam_policy" {
