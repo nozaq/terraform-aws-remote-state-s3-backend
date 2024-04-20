@@ -30,6 +30,12 @@ variable "terraform_iam_policy_name_prefix" {
 # KMS Key for Encrypting S3 Buckets
 #---------------------------------------------------------------------------------------------------
 
+variable "existing_kms_key" {
+  description = "Set this to pass the ARN of an existing KMS key in case we want to use that"
+  type        = string
+  default     = null
+}
+
 variable "kms_key_alias" {
   description = "The alias for the KMS key as viewed in AWS console. It will be automatically prefixed with `alias/`"
   type        = string
@@ -62,6 +68,12 @@ variable "enable_replication" {
   description = "Set this to true to enable S3 bucket replication in another region"
   type        = bool
   default     = true
+}
+
+variable "existing_kms_key_replica" {
+  description = "Set the ARN of the existing KMS key to be used for replication in another region"
+  type        = string
+  default     = null
 }
 
 variable "state_bucket_prefix" {
