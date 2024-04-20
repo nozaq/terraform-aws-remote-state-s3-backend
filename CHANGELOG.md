@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.6.0...v1.6.1) (2024-04-20)
+
+
+### Bug Fixes
+
+* replica replication configuration must wait for versioning to be enabled in both buckets. ([#126](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/126)) ([64bfff6](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/commit/64bfff667a26918c457abe5a671f1903ebe9a983))
+
 ## [1.6.0](https://github.com/nozaq/terraform-aws-remote-state-s3-backend/compare/v1.5.0...v1.6.0) (2023-12-21)
 
 
