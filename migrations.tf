@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------------------------------------
-# Migrations to 0.7.0
+# Migrations
 # --------------------------------------------------------------------------------------------------
 
 moved {
@@ -22,3 +22,7 @@ moved {
   to   = aws_s3_bucket_policy.replica_force_ssl[0]
 }
 
+moved {
+  from = aws_dynamodb_table.lock
+  to   = aws_dynamodb_table.lock[0]
+}
