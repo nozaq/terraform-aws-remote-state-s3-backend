@@ -129,6 +129,7 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 | <a name="input_terraform_iam_policy_create"></a> [terraform\_iam\_policy\_create](#input\_terraform\_iam\_policy\_create) | Specifies whether to terraform IAM policy is created. | `bool` | no |
 | <a name="input_terraform_iam_policy_name"></a> [terraform\_iam\_policy\_name](#input\_terraform\_iam\_policy\_name) | If override\_terraform\_iam\_policy\_name is true, use this policy name instead of dynamic name with policy\_prefix | `string` | no |
 | <a name="input_terraform_iam_policy_name_prefix"></a> [terraform\_iam\_policy\_name\_prefix](#input\_terraform\_iam\_policy\_name\_prefix) | Creates a unique name beginning with the specified prefix. | `string` | no |
+| <a name="input_replication_failure_notification_email"></a> [replication\_failure\_notification\_email](#input\_replication\_failure\_notification\_email) | When set and replication is enabled, creates an SNS email subscription for S3 replication failure events (s3:Replication:OperationFailedReplication). | `string` | no |
 
 ## Outputs
 
@@ -141,4 +142,5 @@ See [the official document](https://www.terraform.io/docs/backends/types/s3.html
 | <a name="output_replica_bucket"></a> [replica\_bucket](#output\_replica\_bucket) | The S3 bucket to replicate the state S3 bucket. |
 | <a name="output_state_bucket"></a> [state\_bucket](#output\_state\_bucket) | The S3 bucket to store the remote state file. |
 | <a name="output_terraform_iam_policy"></a> [terraform\_iam\_policy](#output\_terraform\_iam\_policy) | The IAM Policy to access remote state environment. |
+| <a name="output_replication_failure_sns_topic"></a> [replication\_failure\_sns\_topic](#output\_replication\_failure\_sns\_topic) | SNS topic that receives S3 replication failure events when replication_failure_notification_email is set. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
