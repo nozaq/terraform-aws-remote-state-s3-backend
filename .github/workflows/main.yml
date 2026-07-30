@@ -1,41 +1,52 @@
 name: CI
+
 on:
   push:
     branches:
       - main
   pull_request:
+
+permissions: {}
+
 jobs:
-  pre-commit-checks:
-    name: Pre-commit checks
+  fmt:
+    name: Terraform fmt
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Terraform min/max versions
-        id: minMax
-        uses: clowdhaus/terraform-min-max@v1.0.4
-      - name: Pre-commit Terraform ${{ steps.minMax.outputs.maxVersion }}
-        uses: clowdhaus/terraform-composite-actions/pre-commit@v1.4.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          terraform-version: ${{ steps.minMax.outputs.maxVersion }}
-          terraform-docs-version: v0.16.0
+          persist-credentials: false
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_wrapper: false
+      - name: Check formatting
+        run: terraform fmt -check -recursive
   validate-examples:
     name: Validate examples
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     defaults:
       run:
         shell: bash
-        working-directory: examples
     steps:
-      - uses: hashicorp/setup-terraform@v1
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Check examples
-        env:
-          EXAMPLES: simple
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+        with:
+          terraform_wrapper: false
+      - name: Validate examples
         run: |
-          for EXAMPLE in ${EXAMPLES}
+          for EXAMPLE in examples/*/
           do
-            echo "Validating $EXAMPLE"...
-            cd $EXAMPLE && terraform init && terraform validate && cd -
+            echo "Validating ${EXAMPLE}..."
+            terraform -chdir="${EXAMPLE}" init -backend=false -input=false
+            terraform -chdir="${EXAMPLE}" validate
           done

@@ -4,7 +4,7 @@ output "kms_key" {
 }
 
 output "kms_key_alias" {
-  description = "The alias of the KMS customer master key used to encrypt state bucket and dynamodb."
+  description = "The alias of the KMS customer master key used to encrypt state bucket."
   value       = aws_kms_alias.this
 }
 
@@ -18,13 +18,8 @@ output "replica_bucket" {
   value       = try(aws_s3_bucket.replica[0], null)
 }
 
-output "dynamodb_table" {
-  description = "The DynamoDB table to manage lock states."
-  value       = aws_dynamodb_table.lock
-}
-
 output "kms_key_replica" {
-  description = "The KMS customer master key to encrypt replica bucket and dynamodb."
+  description = "The KMS customer master key to encrypt replica bucket."
   value       = try(aws_kms_key.replica[0], null)
 }
 
