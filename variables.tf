@@ -151,34 +151,6 @@ variable "s3_logging_target_prefix" {
 }
 
 #---------------------------------------------------------------------------------------------------
-# DynamoDB Table for State Locking
-#---------------------------------------------------------------------------------------------------
-
-variable "dynamodb_table_name" {
-  description = "The name of the DynamoDB table to use for state locking."
-  type        = string
-  default     = "tf-remote-state-lock"
-}
-
-variable "dynamodb_table_billing_mode" {
-  description = "Controls how you are charged for read and write throughput and how you manage capacity."
-  type        = string
-  default     = "PAY_PER_REQUEST"
-}
-
-variable "dynamodb_enable_server_side_encryption" {
-  description = "Whether or not to enable encryption at rest using an AWS managed KMS customer master key (CMK)"
-  type        = bool
-  default     = false
-}
-
-variable "dynamodb_deletion_protection_enabled" {
-  description = "Whether or not to enable deletion protection on the DynamoDB table"
-  type        = bool
-  default     = true
-}
-
-#---------------------------------------------------------------------------------------------------
 # Optionally specifying a fixed bucket name
 #---------------------------------------------------------------------------------------------------
 

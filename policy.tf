@@ -1,7 +1,11 @@
 #---------------------------------------------------------------------------------------------------
 # IAM Policy
 # See below for permissions necessary to run Terraform.
-# https://www.terraform.io/docs/backends/types/s3.html#example-configuration
+# https://developer.hashicorp.com/terraform/language/backend/s3#example-configuration
+#
+# State locking is handled by S3 itself, which stores a lock file next to the state file
+# as `<key>.tflock`. Deleting the lock file must be allowed to release the lock.
+# https://developer.hashicorp.com/terraform/language/backend/s3#state-locking
 #
 # terragrunt users would also need additional permissions.
 # https://github.com/nozaq/terraform-aws-remote-state-s3-backend/issues/74
@@ -28,13 +32,8 @@ resource "aws_iam_policy" "terraform" {
     },
     {
       "Effect": "Allow",
-      "Action": [
-        "dynamodb:GetItem",
-        "dynamodb:PutItem",
-        "dynamodb:DeleteItem",
-        "dynamodb:DescribeTable"
-      ],
-      "Resource": "${aws_dynamodb_table.lock.arn}"
+      "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+      "Resource": "${aws_s3_bucket.state.arn}/*.tflock"
     },
     {
       "Effect": "Allow",
