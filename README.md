@@ -78,4 +78,4 @@ See [the official document](https://developer.hashicorp.com/terraform/language/b
 ## Compatibility
 
 - Starting from v1.0, this module requires [Terraform Provider for AWS](https://github.com/terraform-providers/terraform-provider-aws) v4.0 or later. [Version 1.0 Upgrade Guide](./docs/upgrade-1.0.md) described the recommended procedure after the upgrade.
-- Starting from v2.0, this module uses S3 native state locking and no longer creates a DynamoDB table. It requires Terraform v1.10 or later, and backends using this module must set `use_lockfile = true` instead of `dynamodb_table`. [Version 2.0 Upgrade Guide](./docs/upgrade-2.0.md) describes the recommended procedure.
+- Starting from v2.0, this module uses S3 native state locking and no longer creates a DynamoDB table. It requires Terraform v1.11 or later, and backends using this module must set `use_lockfile = true` instead of `dynamodb_table`. [Version 2.0 Upgrade Guide](./docs/upgrade-2.0.md) describes the recommended procedure.

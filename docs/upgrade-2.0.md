@@ -7,11 +7,12 @@ The lock file is stored in the state bucket next to the state file as `<key>.tfl
 
 ## Requirements
 
-- Terraform v1.10 or later, which is the first version supporting `use_lockfile`.
+- Terraform v1.11 or later, which is the first version supporting `use_lockfile`.
 
 ## Removed variables
 
-The following variables were removed. Remove them from your module block before upgrading.
+The following variables were removed. All of them had default values, so you may not have set any of them.
+If your module block does set one, remove it before upgrading, otherwise `terraform plan` fails with an unsupported argument error.
 
 - `dynamodb_table_name`
 - `dynamodb_table_billing_mode`
@@ -19,6 +20,8 @@ The following variables were removed. Remove them from your module block before 
 - `dynamodb_deletion_protection_enabled`
 
 ## Removed outputs
+
+The following output was removed. Remove any reference to it from your configuration.
 
 - `dynamodb_table`
 
