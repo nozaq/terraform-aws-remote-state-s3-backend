@@ -26,7 +26,7 @@ resource "aws_kms_alias" "this" {
 # Bucket Policies
 #---------------------------------------------------------------------------------------------------
 
-data "aws_iam_policy_document" "state_force_ssl" {
+data "aws_iam_policy_document" "state_force_ssl_and_delete_protection" {
   statement {
     sid     = "AllowSSLRequestsOnly"
     actions = ["s3:*"]
@@ -45,15 +45,27 @@ data "aws_iam_policy_document" "state_force_ssl" {
       identifiers = ["*"]
     }
   }
+  statement {
+    sid     = "tf-state-bucket-delete-protection"
+    actions = ["s3:DeleteBucket"]
+    effect  = "Deny"
+    resources = [
+      aws_s3_bucket.state.arn
+    ]
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+  }
 }
 
 #---------------------------------------------------------------------------------------------------
 # Bucket
 #---------------------------------------------------------------------------------------------------
 
-resource "aws_s3_bucket_policy" "state_force_ssl" {
+resource "aws_s3_bucket_policy" "state_force_ssl_and_delete_protection" {
   bucket = aws_s3_bucket.state.id
-  policy = data.aws_iam_policy_document.state_force_ssl.json
+  policy = data.aws_iam_policy_document.state_force_ssl_and_delete_protection.json
 
   depends_on = [aws_s3_bucket_public_access_block.state]
 }
